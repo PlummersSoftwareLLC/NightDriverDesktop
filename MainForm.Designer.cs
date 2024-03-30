@@ -65,6 +65,8 @@
             timerVisualizer = new System.Windows.Forms.Timer(components);
             menuStrip1 = new MenuStrip();
             menuFile = new ToolStripMenuItem();
+            loadDemoFileToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator4 = new ToolStripSeparator();
             newToolStripMenuItem = new ToolStripMenuItem();
             openToolStripMenuItem = new ToolStripMenuItem();
             saveToolStripMenuItem = new ToolStripMenuItem();
@@ -87,8 +89,6 @@
             refreshToolStripMenuItem1 = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
-            loadDemoFileToolStripMenuItem = new ToolStripMenuItem();
-            toolStripSeparator4 = new ToolStripSeparator();
             statusStrip1.SuspendLayout();
             tabControl.SuspendLayout();
             tabMain.SuspendLayout();
@@ -161,6 +161,7 @@
             stripList.View = View.Details;
             stripList.ColumnClick += stripList_ColumnClick;
             stripList.SelectedIndexChanged += stripList_SelectedIndexChanged;
+            stripList.DoubleClick += stripList_DoubleClick;
             // 
             // colName
             // 
@@ -403,41 +404,53 @@
             menuFile.Size = new Size(37, 20);
             menuFile.Text = "&File";
             // 
+            // loadDemoFileToolStripMenuItem
+            // 
+            loadDemoFileToolStripMenuItem.Name = "loadDemoFileToolStripMenuItem";
+            loadDemoFileToolStripMenuItem.Size = new Size(156, 22);
+            loadDemoFileToolStripMenuItem.Text = "Load Demo File";
+            loadDemoFileToolStripMenuItem.Click += loadDemoFileToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator4
+            // 
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            toolStripSeparator4.Size = new Size(153, 6);
+            // 
             // newToolStripMenuItem
             // 
             newToolStripMenuItem.Name = "newToolStripMenuItem";
-            newToolStripMenuItem.Size = new Size(180, 22);
+            newToolStripMenuItem.Size = new Size(156, 22);
             newToolStripMenuItem.Text = "&New...";
             // 
             // openToolStripMenuItem
             // 
             openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(180, 22);
+            openToolStripMenuItem.Size = new Size(156, 22);
             openToolStripMenuItem.Text = "Open...";
             openToolStripMenuItem.Click += openToolStripMenuItem_Click;
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            saveToolStripMenuItem.Size = new Size(180, 22);
+            saveToolStripMenuItem.Size = new Size(156, 22);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
             // saveAsToolStripMenuItem
             // 
             saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            saveAsToolStripMenuItem.Size = new Size(180, 22);
+            saveAsToolStripMenuItem.Size = new Size(156, 22);
             saveAsToolStripMenuItem.Text = "Save As...";
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(177, 6);
+            toolStripSeparator1.Size = new Size(153, 6);
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Size = new Size(156, 22);
             exitToolStripMenuItem.Text = "E&xit";
             // 
             // editToolStripMenuItem
@@ -537,18 +550,6 @@
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             aboutToolStripMenuItem.Size = new Size(116, 22);
             aboutToolStripMenuItem.Text = "About...";
-            // 
-            // loadDemoFileToolStripMenuItem
-            // 
-            loadDemoFileToolStripMenuItem.Name = "loadDemoFileToolStripMenuItem";
-            loadDemoFileToolStripMenuItem.Size = new Size(180, 22);
-            loadDemoFileToolStripMenuItem.Text = "Load Demo File";
-            loadDemoFileToolStripMenuItem.Click += loadDemoFileToolStripMenuItem_Click;
-            // 
-            // toolStripSeparator4
-            // 
-            toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new Size(177, 6);
             // 
             // MainForm
             // 

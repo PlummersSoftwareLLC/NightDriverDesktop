@@ -53,7 +53,7 @@ namespace NightDriver
                           bool   reversed     = false, 
                           byte   channel      = 0, 
                           bool   redGreenSwap = false, 
-                          int    batchSize    = 1)
+                          uint   batchSize    = 1)
         : base(hostName, 
                friendlyName, 
                width, 

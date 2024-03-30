@@ -14,6 +14,7 @@
 //---------------------------------------------------------------------------
 
 
+using NightDriverDesktop.Server;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -226,6 +227,17 @@ namespace NightDriver
         {
             _server.LoadStripsFromTable();
             FillListView();
+        }
+
+        private void stripList_DoubleClick(object sender, EventArgs e)
+        {
+            var strip = stripList.SelectedItems[0].Tag as LightStrip;
+            StripDetails details = new StripDetails(strip);
+            if (details.ShowDialog() == DialogResult.OK)
+            {
+                details.StripDetails_Save();
+                FillListView();
+            }
         }
     }
 }

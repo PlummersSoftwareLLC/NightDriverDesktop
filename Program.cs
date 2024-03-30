@@ -24,4 +24,13 @@ namespace NightDriver
             Application.Run(new MainForm());
         }
     }
+
+    public static class StringExtensions
+    {
+        public static bool IsInRange(this string str, int low, int high, out int number)
+        {
+            number = 0;
+            return int.TryParse(str, out number) && number >= low && number <= high;
+        }
+    }
 }

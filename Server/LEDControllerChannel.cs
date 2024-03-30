@@ -76,7 +76,7 @@ namespace NightDriver
         public uint   Connects      { get; set; } = 0;
         public uint   Watts         { get; set; } = 0;
         public bool   RedGreenSwap  { get; set; } = false;
-        public int    BatchSize     { get; set; } = 1;
+        public uint   BatchSize     { get; set; } = 1;
         public double BatchTimeout  { get; set; } = 1.00;
 
 
@@ -103,19 +103,19 @@ namespace NightDriver
         public uint Offset
         {
             get;
-            protected set;
+            set;
         }
 
         public uint Width
         {
             get;
-            protected set;
+            set;
         }
 
         public uint Height
         {
             get;
-            protected set;
+            set;
         }
 
         protected LEDControllerChannel(string hostName,
@@ -127,7 +127,7 @@ namespace NightDriver
                                        byte channel = 0,
                                        byte watts = 0,
                                        bool swapRedGreen = false,
-                                       int batchSize = 1)
+                                       uint batchSize = 1)
         {
             HostName = hostName;
             FriendlyName = friendlyName;
