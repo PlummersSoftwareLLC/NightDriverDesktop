@@ -52,35 +52,6 @@ namespace NightDriver
             }
         }
 
-        // Main
-        //
-        // Application main loop - starts worker threads
-
-        internal static Site [] g_AllSites =  
-        { 
-          new CeilingStrip   { FramesPerSecond = 30 }, 
-          
-          new Cabana()            { FramesPerSecond = 28 },
-
-          new Bench()             { FramesPerSecond = 28 },
-          
-          new TV()                { FramesPerSecond = 30 },
-          new ShopCupboards()     { FramesPerSecond = 20 },  
-        
-          new ShopSouthWindows1() { FramesPerSecond = 2 },  
-          new ShopSouthWindows2() { FramesPerSecond = 2 },  
-          new ShopSouthWindows3() { FramesPerSecond = 2 },  
-        };
-
-        public static Site[] Locations
-        {
-            get
-            {
-                return g_AllSites;
-            }
-        }
-
-
         protected static void myCancelKeyPressHandler(object sender, ConsoleCancelEventArgs args)
         {
             Stats.WriteLine($"  Key pressed: {args.SpecialKey}");
@@ -94,49 +65,7 @@ namespace NightDriver
 
         internal void Start(CancellationToken token)
         {
-            // Establish an event handler to process key press events.
-            if (SystemHasConsole)
-                Console.CancelKeyPress += new ConsoleCancelEventHandler(myCancelKeyPressHandler);
 
-            DateTime lastStats = DateTime.UtcNow - TimeSpan.FromDays(1);
-
-            foreach (var site in g_AllSites)
-                site.StartWorkerThread(token);
-
-            while (!token.IsCancellationRequested)
-            {
-                double d = (DateTime.UtcNow - lastStats).TotalMilliseconds;
-                // Don't update the stats more than ever 100ms
-                if (d >= 60)
-                {
-                    lastStats = DateTime.UtcNow;
-
-                    if (SystemHasConsole)
-                    {
-                        Stats.Render(g_AllSites);
-
-                        // If user presses a command key like 'c' to clear, handle it here
-
-                        try
-                        {
-                            if (Console.KeyAvailable)
-                            {
-                                ConsoleKeyInfo cki = Console.ReadKey();
-                                if (cki.KeyChar == 'c')
-                                    Console.Clear();
-                            }
-                        }
-                        catch
-                        {
-                        }
-                    }
-                }
-                else
-                {
-                    Thread.Sleep(60 - (int)d);
-                }
-            }
-            Stats.WriteLine("Exiting!");
         }
     }
 }

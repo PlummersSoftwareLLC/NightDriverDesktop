@@ -211,12 +211,14 @@ namespace NightDriver
             string bar = Bar(ratio, maxLen);
             printf_xy(leftMargin, topLine + 1, bar);
 
+            /*
             printf_xy(0, topLine + 2, "Miliseconds Spare: " + Site.MinimumSpareTime.ToString() + "       ");
             double ratio2 = Site.MinimumSpareTime / 40.0;
             if (ratio2 > 1)
                 ratio2 = 1;
             string bar2 = Bar(ratio2, maxLen);
             printf_xy(leftMargin, topLine + 2, bar2);
+            */
         }
     }
 }

@@ -97,6 +97,7 @@ namespace NightDriver
         public List<LightStrip> LightStrips { get; set; } = new List<LightStrip>();
         public List<ScheduledEffect> LEDEffects { get; set; } = new List<ScheduledEffect>();
 
+
         [JsonIgnore]
         public CRGB[] LEDs { get; private set; }
 
@@ -144,8 +145,6 @@ namespace NightDriver
         {
             _iEffectOffset--;
         }
-
-        public static uint MinimumSpareTime => (uint)ConsoleApp.g_AllSites.Min(location => location.SpareTime);
 
         // If we were certain that every pixel would get touched, and hence created, we wouldn't need to init them, but to
         // be safe, we init them all to a default pixel value (like magenta)

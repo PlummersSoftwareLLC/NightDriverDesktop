@@ -15,7 +15,10 @@
 
 
 using NightDriverDesktop.Server;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Dynamic;
+using System.Net.Sockets;
 using System.Runtime.InteropServices;
 
 namespace NightDriver
@@ -95,9 +98,15 @@ namespace NightDriver
                                   ref preference, sizeof(uint));
 
             InitializeComponent();
+
+            monitorWorker.DoWork += monitorWorker_DoWork;
+            monitorWorker.RunWorkerCompleted += monitorWorker_RunWorkerCompleted;
+
             FillListView();
             timerListView.Start();
             timerVisualizer.Start();
+
+            UpdateUIStates();
         }
 
         private void tabControl_DrawItem(object? sender, DrawItemEventArgs e)
@@ -184,12 +193,12 @@ namespace NightDriver
             checkGroupItems.Checked = stripList.ShowGroups;
             checkGroupItems.Enabled = stripList.Groups.Count > 0;
 
-            buttonPreviousEffect.Enabled = stripList.SelectedIndices.Count == 1;
-            buttonNextEffect.Enabled = stripList.SelectedIndices.Count == 1;
-
             buttonDeleteStrip.Enabled = !_server.IsRunning && stripList.SelectedIndices.Count > 0;
             buttonEditStrip.Enabled = !_server.IsRunning && stripList.SelectedIndices.Count == 1;
             buttonNewStrip.Enabled = !_server.IsRunning;
+
+            buttonStartMonitor.Enabled = !monitorWorker.IsBusy;
+            buttonStopMonitor.Enabled = monitorWorker.IsBusy;
         }
 
         private void buttonPreviousEffect_Click(object sender, EventArgs e)
@@ -232,12 +241,120 @@ namespace NightDriver
         private void stripList_DoubleClick(object sender, EventArgs e)
         {
             var strip = stripList.SelectedItems[0].Tag as LightStrip;
-            StripDetails details = new StripDetails(strip);
+            StripDetails details = new StripDetails(_server, strip);
             if (details.ShowDialog() == DialogResult.OK)
             {
                 details.StripDetails_Save();
                 FillListView();
             }
+        }
+
+        private void buttonStartMonitor_Click(object sender, EventArgs e)
+        {
+            if (!monitorWorker.IsBusy)
+            {
+                buttonStartMonitor.Enabled = false;
+                monitorWorker.RunWorkerAsync();
+            }
+        }
+
+        private void buttonStopMonitor_Click(object sender, EventArgs e)
+        {
+            if (monitorWorker.WorkerSupportsCancellation)
+                monitorWorker.CancelAsync();
+        }
+
+        // StreamReadExact
+        //
+        // Reads exactly the specified number of bytes from the stream, and waits for it until it gets it
+
+        public byte[] StreamReadExact(NetworkStream stream, uint size)
+        {
+            byte[] buffer = new byte[size];
+            int bytesRead = 0;
+            int totalBytesRead = 0;
+
+            while (totalBytesRead < size)
+            {
+                bytesRead = stream.Read(buffer, totalBytesRead, (int) size - totalBytesRead);
+                if (bytesRead == 0)
+                {
+                    // Connection closed or end of stream reached
+                    break;
+                }
+                totalBytesRead += bytesRead;
+            }
+
+            if (totalBytesRead < size)
+            {
+                throw new IOException("Did not receive the expected number of bytes.");
+            }
+
+            return buffer;
+        }
+
+        // monitorWorker_DoWork
+        //
+        // Reads color data from the server and updates the visualizer with that data
+
+        const UInt32 ColorDataPacketHeader = 0x434C5244;
+        private void monitorWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            for (;;)
+            {
+                try
+                {
+                    var worker = sender as BackgroundWorker;
+                    using (var client = new TcpClient(textColorDataHost.Text, 12000))
+                    {
+                        using (var stream = client.GetStream())
+                        {
+                            while (!worker.CancellationPending)
+                            {
+                                byte[] headerbuffer = StreamReadExact(stream, 3 * 4);
+
+                                UInt32 header = LEDInterop.BytesToDWORD(headerbuffer, 0);
+                                UInt32 width  = LEDInterop.BytesToDWORD(headerbuffer, 4);
+                                UInt32 height = LEDInterop.BytesToDWORD(headerbuffer, 8);
+
+                                if (header != ColorDataPacketHeader)
+                                {
+                                    Debug.WriteLine("Invalid header received in monitorWorker_DoWork");
+                                    worker.CancelAsync();
+                                    break;
+                                }
+
+                                byte[] bytes = StreamReadExact(stream, width * height * 3);
+                                visualizerColorData.fixedWidth = width;
+                                visualizerColorData.ColorData = LEDInterop.GetColorsFromBytes(bytes, width * height);
+                            }
+                            return;
+                        }
+                    }
+                }
+                catch (SocketException ex)
+                {
+                    Debug.WriteLine("SocketException in monitorWorker_DoWork: " + ex.Message);
+                }
+                catch (IOException ex)
+                {
+                    Debug.WriteLine("IOException in monitorWorker_DoWork: " + ex.Message);
+                }
+                Thread.Sleep(1000);
+            }
+        }
+
+        private void monitorWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled)
+            {
+                MessageBox.Show("Operation was cancelled.");
+            }
+            else if (e.Error != null)
+            {
+                MessageBox.Show("An error occurred: " + e.Error.Message);
+            }
+            UpdateUIStates();
         }
     }
 }

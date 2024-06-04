@@ -16,7 +16,7 @@ using Newtonsoft.Json;
 
 namespace NightDriver
 {
-    class LEDServer
+    internal class LEDServer
     {
         public bool IsRunning
         {

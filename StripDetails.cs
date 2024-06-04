@@ -13,17 +13,19 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace NightDriverDesktop.Server
 {
-    public partial class StripDetails : Form
+    internal partial class StripDetails : Form
     {
+        private LEDServer _server;
         private LightStrip _strip;
 
-        public StripDetails()
+        internal StripDetails()
         {
             InitializeComponent();
         }
 
-        public StripDetails(LightStrip strip) : this()
+        internal StripDetails(LEDServer server, LightStrip strip) : this()
         {
+            _server = server; 
             _strip = strip;
 
             textHostName.Text = strip.HostName;
@@ -35,9 +37,16 @@ namespace NightDriverDesktop.Server
             checkCompress.Checked = strip.CompressData;
             checkSwapRedGreen.Checked = strip.RedGreenSwap;
             checkReverse.Checked = strip.Reversed;
+            comboChannel.SelectedIndex = strip.Channel;
+
+            foreach (var site in _server.AllSites.Values)
+                comboLocation.Items.Add(site.Name);
+
+            if (_strip.StripSite != null)
+                comboLocation.SelectedItem = _strip.StripSite.Name; 
         }
 
-        public bool StripDetails_Save()
+        internal bool StripDetails_Save()
         {
             // First we validate the inputs
 
@@ -100,7 +109,7 @@ namespace NightDriverDesktop.Server
             _strip.CompressData = checkCompress.Checked;
             _strip.RedGreenSwap = checkSwapRedGreen.Checked;
             _strip.Reversed = checkReverse.Checked;
-
+            _strip.Channel = (byte) comboChannel.SelectedIndex;
             return true;
         }
 

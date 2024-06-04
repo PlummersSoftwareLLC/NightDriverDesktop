@@ -15,6 +15,7 @@
 
 
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using ZLIB;
 
 namespace NightDriver
@@ -97,6 +98,25 @@ namespace NightDriver
             return data;
         }
 
+        // GetColorsFromBytes
+        //
+        // Given a series of bytes in memory, returns them as an array of CRGB objects. 
+
+        public static CRGB[] GetColorsFromBytes(byte[] data, uint length)
+        {
+            CRGB[] colors = new CRGB[length];
+            for (int i = 0; i < length; i++)
+            {
+                colors[i] = new CRGB
+                {
+                    r = data[i * 3],
+                    g = data[i * 3 + 1],
+                    b = data[i * 3 + 2]
+                };
+            }
+            return colors;
+        }
+
         public static byte[] ULONGToBytes(UInt64 input)
         {
             return new byte[8]
@@ -130,6 +150,26 @@ namespace NightDriver
                 (byte)((input      ) & 0xff),
                 (byte)((input >>  8) & 0xff),
             };
+        }
+
+        public static UInt64 BytesToULONG(byte[] bytes, int startIndex = 0)
+        {
+            return (UInt64)bytes[startIndex] |
+                   ((UInt64)bytes[startIndex + 1] << 8) |
+                   ((UInt64)bytes[startIndex + 2] << 16) |
+                   ((UInt64)bytes[startIndex + 3] << 24) |
+                   ((UInt64)bytes[startIndex + 4] << 32) |
+                   ((UInt64)bytes[startIndex + 5] << 40) |
+                   ((UInt64)bytes[startIndex + 6] << 48) |
+                   ((UInt64)bytes[startIndex + 7] << 56);
+        }
+
+        public static UInt32 BytesToDWORD(byte[] bytes, int startIndex = 0)
+        {
+            return (UInt32)bytes[startIndex] |
+                   ((UInt32)bytes[startIndex + 1] << 8) |
+                   ((UInt32)bytes[startIndex + 2] << 16) |
+                   ((UInt32)bytes[startIndex + 3] << 24);
         }
 
         // CombineByteArrays - Combine N arrays and returns them as one new big new one

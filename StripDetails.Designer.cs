@@ -49,14 +49,18 @@
             checkCompress = new CheckBox();
             buttonApply = new Button();
             buttonCancel = new Button();
+            groupBox3 = new GroupBox();
+            comboLocation = new ComboBox();
+            label1 = new Label();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
+            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // labelName
             // 
             labelName.AutoSize = true;
-            labelName.Location = new Point(55, 24);
+            labelName.Location = new Point(55, 21);
             labelName.Name = "labelName";
             labelName.Size = new Size(39, 15);
             labelName.TabIndex = 0;
@@ -79,7 +83,7 @@
             groupBox1.Controls.Add(labelHostName);
             groupBox1.Controls.Add(textName);
             groupBox1.Controls.Add(labelName);
-            groupBox1.Location = new Point(12, 12);
+            groupBox1.Location = new Point(12, 66);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(525, 138);
             groupBox1.TabIndex = 1;
@@ -202,7 +206,7 @@
             groupBox2.Controls.Add(checkSwapRedGreen);
             groupBox2.Controls.Add(checkReverse);
             groupBox2.Controls.Add(checkCompress);
-            groupBox2.Location = new Point(12, 156);
+            groupBox2.Location = new Point(12, 210);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(525, 55);
             groupBox2.TabIndex = 1;
@@ -242,7 +246,7 @@
             // buttonApply
             // 
             buttonApply.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonApply.Location = new Point(462, 225);
+            buttonApply.Location = new Point(459, 278);
             buttonApply.Name = "buttonApply";
             buttonApply.Size = new Size(75, 23);
             buttonApply.TabIndex = 2;
@@ -254,20 +258,50 @@
             // 
             buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             buttonCancel.DialogResult = DialogResult.Cancel;
-            buttonCancel.Location = new Point(381, 225);
+            buttonCancel.Location = new Point(378, 278);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new Size(75, 23);
             buttonCancel.TabIndex = 2;
             buttonCancel.Text = "Cancel";
             buttonCancel.UseVisualStyleBackColor = true;
             // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(comboLocation);
+            groupBox3.Controls.Add(label1);
+            groupBox3.Location = new Point(12, 5);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(525, 55);
+            groupBox3.TabIndex = 1;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "LED Location";
+            // 
+            // comboLocation
+            // 
+            comboLocation.FormattingEnabled = true;
+            comboLocation.Location = new Point(100, 22);
+            comboLocation.Name = "comboLocation";
+            comboLocation.Size = new Size(419, 23);
+            comboLocation.TabIndex = 0;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(41, 26);
+            label1.Name = "label1";
+            label1.Size = new Size(53, 15);
+            label1.TabIndex = 0;
+            label1.Text = "Location";
+            label1.TextAlign = ContentAlignment.TopRight;
+            // 
             // StripDetails
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(549, 260);
+            ClientSize = new Size(546, 313);
             Controls.Add(buttonCancel);
             Controls.Add(buttonApply);
+            Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Name = "StripDetails";
@@ -277,6 +311,8 @@
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -303,5 +339,8 @@
         private Label labelChannel;
         private Button buttonApply;
         private Button buttonCancel;
+        private GroupBox groupBox3;
+        private ComboBox comboLocation;
+        private Label label1;
     }
 }

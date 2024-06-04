@@ -49,18 +49,34 @@
             colConnects = new ColumnHeader();
             colQueue = new ColumnHeader();
             colEffect = new ColumnHeader();
-            tabControl = new TabControl();
+            tabColorData = new TabControl();
             tabMain = new TabPage();
             splitContainer1 = new SplitContainer();
             buttonDeleteStrip = new Button();
             buttonEditStrip = new Button();
             buttonNewStrip = new Button();
-            buttonNextEffect = new Button();
-            buttonPreviousEffect = new Button();
             checkGroupItems = new CheckBox();
             panelVisualizer = new LEDVisualizer();
+            tabLocations = new TabPage();
+            splitContainer2 = new SplitContainer();
+            button1 = new Button();
+            button2 = new Button();
+            button3 = new Button();
+            listLocations = new ListView();
+            columnLocartion = new ColumnHeader();
+            columnWidth = new ColumnHeader();
+            columnHeight = new ColumnHeader();
+            columnFPS = new ColumnHeader();
+            columnEffect = new ColumnHeader();
+            ledVisualizer1 = new LEDVisualizer();
             tabLogging = new TabPage();
             textLog = new TextBox();
+            tabColor = new TabPage();
+            buttonStopMonitor = new Button();
+            label1 = new Label();
+            buttonStartMonitor = new Button();
+            textColorDataHost = new TextBox();
+            visualizerColorData = new LEDVisualizer();
             timer1 = new System.Windows.Forms.Timer(components);
             timerVisualizer = new System.Windows.Forms.Timer(components);
             menuStrip1 = new MenuStrip();
@@ -89,21 +105,28 @@
             refreshToolStripMenuItem1 = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
+            monitorWorker = new System.ComponentModel.BackgroundWorker();
             statusStrip1.SuspendLayout();
-            tabControl.SuspendLayout();
+            tabColorData.SuspendLayout();
             tabMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
+            tabLocations.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer2).BeginInit();
+            splitContainer2.Panel1.SuspendLayout();
+            splitContainer2.Panel2.SuspendLayout();
+            splitContainer2.SuspendLayout();
             tabLogging.SuspendLayout();
+            tabColor.SuspendLayout();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // StartButton
             // 
             StartButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            StartButton.Location = new Point(1101, 639);
+            StartButton.Location = new Point(1091, 256);
             StartButton.Name = "StartButton";
             StartButton.Size = new Size(75, 23);
             StartButton.TabIndex = 0;
@@ -115,7 +138,7 @@
             // 
             StopButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             StopButton.Enabled = false;
-            StopButton.Location = new Point(1020, 639);
+            StopButton.Location = new Point(1010, 256);
             StopButton.Name = "StopButton";
             StopButton.Size = new Size(75, 23);
             StopButton.TabIndex = 0;
@@ -126,9 +149,9 @@
             // statusStrip1
             // 
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
-            statusStrip1.Location = new Point(0, 739);
+            statusStrip1.Location = new Point(0, 648);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(1209, 22);
+            statusStrip1.Size = new Size(1200, 22);
             statusStrip1.TabIndex = 1;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -154,7 +177,7 @@
             stripList.Location = new Point(0, 0);
             stripList.Name = "stripList";
             stripList.ShowGroups = false;
-            stripList.Size = new Size(1178, 290);
+            stripList.Size = new Size(1169, 256);
             stripList.Sorting = SortOrder.Ascending;
             stripList.TabIndex = 2;
             stripList.UseCompatibleStateImageBehavior = false;
@@ -236,36 +259,36 @@
             colEffect.Text = "Effect";
             colEffect.Width = 190;
             // 
-            // tabControl
+            // tabColorData
             // 
-            tabControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            tabControl.Controls.Add(tabMain);
-            tabControl.Controls.Add(tabLogging);
-            tabControl.Location = new Point(8, 34);
-            tabControl.Margin = new Padding(0);
-            tabControl.Name = "tabControl";
-            tabControl.Padding = new Point(0, 0);
-            tabControl.SelectedIndex = 0;
-            tabControl.Size = new Size(1192, 696);
-            tabControl.TabIndex = 3;
+            tabColorData.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tabColorData.Controls.Add(tabMain);
+            tabColorData.Controls.Add(tabLocations);
+            tabColorData.Controls.Add(tabLogging);
+            tabColorData.Controls.Add(tabColor);
+            tabColorData.Location = new Point(8, 34);
+            tabColorData.Margin = new Padding(0);
+            tabColorData.Name = "tabColorData";
+            tabColorData.Padding = new Point(0, 0);
+            tabColorData.SelectedIndex = 0;
+            tabColorData.Size = new Size(1183, 607);
+            tabColorData.TabIndex = 3;
             // 
             // tabMain
             // 
             tabMain.BackColor = Color.Transparent;
             tabMain.Controls.Add(splitContainer1);
-            tabMain.Controls.Add(StopButton);
-            tabMain.Controls.Add(StartButton);
             tabMain.ForeColor = Color.Black;
             tabMain.Location = new Point(4, 24);
             tabMain.Name = "tabMain";
             tabMain.Padding = new Padding(3);
-            tabMain.Size = new Size(1184, 668);
+            tabMain.Size = new Size(1175, 579);
             tabMain.TabIndex = 0;
             tabMain.Text = "WiFi Control";
             // 
             // splitContainer1
             // 
-            splitContainer1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            splitContainer1.Dock = DockStyle.Fill;
             splitContainer1.Location = new Point(3, 3);
             splitContainer1.Name = "splitContainer1";
             splitContainer1.Orientation = Orientation.Horizontal;
@@ -275,22 +298,22 @@
             splitContainer1.Panel1.Controls.Add(buttonDeleteStrip);
             splitContainer1.Panel1.Controls.Add(buttonEditStrip);
             splitContainer1.Panel1.Controls.Add(buttonNewStrip);
-            splitContainer1.Panel1.Controls.Add(buttonNextEffect);
-            splitContainer1.Panel1.Controls.Add(buttonPreviousEffect);
             splitContainer1.Panel1.Controls.Add(checkGroupItems);
             splitContainer1.Panel1.Controls.Add(stripList);
             // 
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(panelVisualizer);
-            splitContainer1.Size = new Size(1178, 630);
-            splitContainer1.SplitterDistance = 317;
+            splitContainer1.Panel2.Controls.Add(StopButton);
+            splitContainer1.Panel2.Controls.Add(StartButton);
+            splitContainer1.Size = new Size(1169, 573);
+            splitContainer1.SplitterDistance = 287;
             splitContainer1.TabIndex = 4;
             // 
             // buttonDeleteStrip
             // 
             buttonDeleteStrip.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonDeleteStrip.Location = new Point(938, 293);
+            buttonDeleteStrip.Location = new Point(929, 259);
             buttonDeleteStrip.Name = "buttonDeleteStrip";
             buttonDeleteStrip.Size = new Size(75, 23);
             buttonDeleteStrip.TabIndex = 4;
@@ -301,7 +324,7 @@
             // buttonEditStrip
             // 
             buttonEditStrip.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonEditStrip.Location = new Point(1019, 293);
+            buttonEditStrip.Location = new Point(1010, 259);
             buttonEditStrip.Name = "buttonEditStrip";
             buttonEditStrip.Size = new Size(75, 23);
             buttonEditStrip.TabIndex = 4;
@@ -311,40 +334,18 @@
             // buttonNewStrip
             // 
             buttonNewStrip.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonNewStrip.Location = new Point(1100, 293);
+            buttonNewStrip.Location = new Point(1091, 259);
             buttonNewStrip.Name = "buttonNewStrip";
             buttonNewStrip.Size = new Size(75, 23);
             buttonNewStrip.TabIndex = 4;
             buttonNewStrip.Text = "&New...";
             buttonNewStrip.UseVisualStyleBackColor = true;
             // 
-            // buttonNextEffect
-            // 
-            buttonNextEffect.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            buttonNextEffect.Location = new Point(243, 292);
-            buttonNextEffect.Name = "buttonNextEffect";
-            buttonNextEffect.Size = new Size(75, 23);
-            buttonNextEffect.TabIndex = 4;
-            buttonNextEffect.Text = "Effect &>";
-            buttonNextEffect.UseVisualStyleBackColor = true;
-            buttonNextEffect.Click += buttonNextEffect_Click;
-            // 
-            // buttonPreviousEffect
-            // 
-            buttonPreviousEffect.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            buttonPreviousEffect.Location = new Point(162, 292);
-            buttonPreviousEffect.Name = "buttonPreviousEffect";
-            buttonPreviousEffect.Size = new Size(75, 23);
-            buttonPreviousEffect.TabIndex = 4;
-            buttonPreviousEffect.Text = "&< Effect";
-            buttonPreviousEffect.UseVisualStyleBackColor = true;
-            buttonPreviousEffect.Click += buttonPreviousEffect_Click;
-            // 
             // checkGroupItems
             // 
             checkGroupItems.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             checkGroupItems.AutoSize = true;
-            checkGroupItems.Location = new Point(0, 296);
+            checkGroupItems.Location = new Point(0, 266);
             checkGroupItems.Name = "checkGroupItems";
             checkGroupItems.Size = new Size(156, 19);
             checkGroupItems.TabIndex = 3;
@@ -354,12 +355,118 @@
             // 
             // panelVisualizer
             // 
+            panelVisualizer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelVisualizer.ColorData = null;
-            panelVisualizer.Dock = DockStyle.Fill;
             panelVisualizer.Location = new Point(0, 0);
             panelVisualizer.Name = "panelVisualizer";
-            panelVisualizer.Size = new Size(1178, 309);
+            panelVisualizer.Size = new Size(1166, 250);
             panelVisualizer.TabIndex = 3;
+            // 
+            // tabLocations
+            // 
+            tabLocations.Controls.Add(splitContainer2);
+            tabLocations.Location = new Point(4, 24);
+            tabLocations.Name = "tabLocations";
+            tabLocations.Padding = new Padding(3);
+            tabLocations.Size = new Size(1175, 579);
+            tabLocations.TabIndex = 2;
+            tabLocations.Text = "Locations";
+            tabLocations.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer2
+            // 
+            splitContainer2.BorderStyle = BorderStyle.Fixed3D;
+            splitContainer2.Dock = DockStyle.Fill;
+            splitContainer2.Location = new Point(3, 3);
+            splitContainer2.Name = "splitContainer2";
+            splitContainer2.Orientation = Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            splitContainer2.Panel1.Controls.Add(button1);
+            splitContainer2.Panel1.Controls.Add(button2);
+            splitContainer2.Panel1.Controls.Add(button3);
+            splitContainer2.Panel1.Controls.Add(listLocations);
+            // 
+            // splitContainer2.Panel2
+            // 
+            splitContainer2.Panel2.Controls.Add(ledVisualizer1);
+            splitContainer2.Size = new Size(1169, 573);
+            splitContainer2.SplitterDistance = 336;
+            splitContainer2.TabIndex = 0;
+            // 
+            // button1
+            // 
+            button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            button1.Location = new Point(925, 306);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 5;
+            button1.Text = "&Delete";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            button2.Location = new Point(1006, 306);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 23);
+            button2.TabIndex = 6;
+            button2.Text = "&Edit...";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            button3.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            button3.Location = new Point(1087, 306);
+            button3.Name = "button3";
+            button3.Size = new Size(75, 23);
+            button3.TabIndex = 7;
+            button3.Text = "&New...";
+            button3.UseVisualStyleBackColor = true;
+            // 
+            // listLocations
+            // 
+            listLocations.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            listLocations.Columns.AddRange(new ColumnHeader[] { columnLocartion, columnWidth, columnHeight, columnFPS, columnEffect });
+            listLocations.Location = new Point(3, 3);
+            listLocations.Name = "listLocations";
+            listLocations.Size = new Size(1159, 297);
+            listLocations.TabIndex = 0;
+            listLocations.UseCompatibleStateImageBehavior = false;
+            listLocations.View = View.Details;
+            // 
+            // columnLocartion
+            // 
+            columnLocartion.Text = "Location Name";
+            columnLocartion.Width = 200;
+            // 
+            // columnWidth
+            // 
+            columnWidth.Text = "Width";
+            // 
+            // columnHeight
+            // 
+            columnHeight.Text = "Height";
+            // 
+            // columnFPS
+            // 
+            columnFPS.Text = "Frames Per Second";
+            columnFPS.Width = 150;
+            // 
+            // columnEffect
+            // 
+            columnEffect.Text = "Current Effect";
+            columnEffect.Width = 200;
+            // 
+            // ledVisualizer1
+            // 
+            ledVisualizer1.ColorData = null;
+            ledVisualizer1.Dock = DockStyle.Fill;
+            ledVisualizer1.Location = new Point(0, 0);
+            ledVisualizer1.Name = "ledVisualizer1";
+            ledVisualizer1.Size = new Size(1165, 229);
+            ledVisualizer1.TabIndex = 4;
             // 
             // tabLogging
             // 
@@ -367,7 +474,7 @@
             tabLogging.Location = new Point(4, 24);
             tabLogging.Name = "tabLogging";
             tabLogging.Padding = new Padding(3);
-            tabLogging.Size = new Size(1184, 668);
+            tabLogging.Size = new Size(1175, 579);
             tabLogging.TabIndex = 1;
             tabLogging.Text = "Logging";
             tabLogging.UseVisualStyleBackColor = true;
@@ -381,8 +488,73 @@
             textLog.Multiline = true;
             textLog.Name = "textLog";
             textLog.ScrollBars = ScrollBars.Vertical;
-            textLog.Size = new Size(991, 466);
+            textLog.Size = new Size(1205, 801);
             textLog.TabIndex = 0;
+            // 
+            // tabColor
+            // 
+            tabColor.Controls.Add(buttonStopMonitor);
+            tabColor.Controls.Add(label1);
+            tabColor.Controls.Add(buttonStartMonitor);
+            tabColor.Controls.Add(textColorDataHost);
+            tabColor.Controls.Add(visualizerColorData);
+            tabColor.Location = new Point(4, 24);
+            tabColor.Name = "tabColor";
+            tabColor.Padding = new Padding(3);
+            tabColor.Size = new Size(1175, 579);
+            tabColor.TabIndex = 3;
+            tabColor.Text = "Color Data";
+            tabColor.UseVisualStyleBackColor = true;
+            // 
+            // buttonStopMonitor
+            // 
+            buttonStopMonitor.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonStopMonitor.Enabled = false;
+            buttonStopMonitor.Location = new Point(1013, 550);
+            buttonStopMonitor.Name = "buttonStopMonitor";
+            buttonStopMonitor.Size = new Size(75, 23);
+            buttonStopMonitor.TabIndex = 1;
+            buttonStopMonitor.Text = "Stop";
+            buttonStopMonitor.UseVisualStyleBackColor = true;
+            buttonStopMonitor.Click += buttonStopMonitor_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 13);
+            label1.Name = "label1";
+            label1.Size = new Size(89, 15);
+            label1.TabIndex = 7;
+            label1.Text = "IP or Hostname";
+            // 
+            // buttonStartMonitor
+            // 
+            buttonStartMonitor.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonStartMonitor.Location = new Point(1094, 550);
+            buttonStartMonitor.Name = "buttonStartMonitor";
+            buttonStartMonitor.Size = new Size(75, 23);
+            buttonStartMonitor.TabIndex = 2;
+            buttonStartMonitor.Text = "Start";
+            buttonStartMonitor.UseVisualStyleBackColor = true;
+            buttonStartMonitor.Click += buttonStartMonitor_Click;
+            // 
+            // textColorDataHost
+            // 
+            textColorDataHost.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textColorDataHost.Location = new Point(107, 10);
+            textColorDataHost.Name = "textColorDataHost";
+            textColorDataHost.Size = new Size(424, 23);
+            textColorDataHost.TabIndex = 6;
+            textColorDataHost.Text = "192.168.8.235";
+            // 
+            // visualizerColorData
+            // 
+            visualizerColorData.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            visualizerColorData.ColorData = null;
+            visualizerColorData.Location = new Point(3, 39);
+            visualizerColorData.Name = "visualizerColorData";
+            visualizerColorData.Size = new Size(1176, 505);
+            visualizerColorData.TabIndex = 5;
             // 
             // timerVisualizer
             // 
@@ -393,7 +565,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { menuFile, editToolStripMenuItem, viewToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1209, 24);
+            menuStrip1.Size = new Size(1200, 24);
             menuStrip1.TabIndex = 4;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -551,13 +723,17 @@
             aboutToolStripMenuItem.Size = new Size(116, 22);
             aboutToolStripMenuItem.Text = "About...";
             // 
+            // monitorWorker
+            // 
+            monitorWorker.WorkerSupportsCancellation = true;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Gray;
-            ClientSize = new Size(1209, 761);
-            Controls.Add(tabControl);
+            ClientSize = new Size(1200, 670);
+            Controls.Add(tabColorData);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
@@ -565,15 +741,22 @@
             Text = "NightDriver Desktop";
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
-            tabControl.ResumeLayout(false);
+            tabColorData.ResumeLayout(false);
             tabMain.ResumeLayout(false);
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel1.PerformLayout();
             splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
+            tabLocations.ResumeLayout(false);
+            splitContainer2.Panel1.ResumeLayout(false);
+            splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
+            splitContainer2.ResumeLayout(false);
             tabLogging.ResumeLayout(false);
             tabLogging.PerformLayout();
+            tabColor.ResumeLayout(false);
+            tabColor.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
@@ -602,7 +785,7 @@
         private ColumnHeader colQueue;
         private ColumnHeader colOffset;
         private ColumnHeader colEffect;
-        private TabControl tabControl;
+        private TabControl tabColorData;
         private TabPage tabMain;
         private TabPage tabLogging;
         private TextBox textLog;
@@ -611,11 +794,9 @@
         private System.Windows.Forms.Timer timerVisualizer;
         private SplitContainer splitContainer1;
         private CheckBox checkGroupItems;
-        private Button buttonPreviousEffect;
         private Button buttonDeleteStrip;
         private Button buttonEditStrip;
         private Button buttonNewStrip;
-        private Button buttonNextEffect;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem menuFile;
         private ToolStripMenuItem newToolStripMenuItem;
@@ -642,5 +823,24 @@
         private ToolStripMenuItem refreshToolStripMenuItem1;
         private ToolStripMenuItem loadDemoFileToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator4;
+        private TabPage tabLocations;
+        private SplitContainer splitContainer2;
+        private LEDVisualizer ledVisualizer1;
+        private ListView listLocations;
+        private Button button1;
+        private Button button2;
+        private Button button3;
+        private ColumnHeader columnLocartion;
+        private ColumnHeader columnWidth;
+        private ColumnHeader columnHeight;
+        private ColumnHeader columnFPS;
+        private ColumnHeader columnEffect;
+        private TabPage tabColor;
+        private LEDVisualizer visualizerColorData;
+        private TextBox textColorDataHost;
+        private Label label1;
+        private Button buttonStopMonitor;
+        private Button buttonStartMonitor;
+        private System.ComponentModel.BackgroundWorker monitorWorker;
     }
 }
