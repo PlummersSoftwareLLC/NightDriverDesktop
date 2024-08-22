@@ -21,7 +21,6 @@ namespace NightDriver
         {
             _videoFilePath = videoFilePath;
             FFmpegLoader.FFmpegPath = @"C:\Users\dave\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg.Shared_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-7.0.2-full_build-shared\bin\";
-            _mediaFile = MediaFile.Open(_videoFilePath);
             _resizedFrame = new Image<Rgb24>(512, 32);
         }
 
@@ -29,6 +28,24 @@ namespace NightDriver
         {
             _mediaFile?.Dispose();
             _resizedFrame?.Dispose();
+        }
+
+        public override void OnStart()
+        {
+            try
+            {
+                _mediaFile = MediaFile.Open(_videoFilePath);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Can't load video: " + _videoFilePath);
+                throw;
+            }
+        }
+
+        public override void OnStop()
+        {
+            _mediaFile.Dispose();
         }
 
         protected override void Render(ILEDGraphics graphics)

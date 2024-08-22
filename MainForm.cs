@@ -161,6 +161,9 @@ namespace NightDriver
             {
                 var strip = stripList.SelectedItems[0].Tag as LightStrip;
                 panelVisualizer.ColorData = strip.StripSite.LEDs;
+                panelVisualizer.fixedWidth = strip.StripSite.Width > 1 ? strip.StripSite.Width : 0;
+
+                visualizerColorData.fixedWidth = strip.StripSite.Height > 1 ? strip.StripSite.Width : 0;
                 timerVisualizer.Interval = Math.Clamp(1000 / strip.StripSite.FramesPerSecond, 20, 500);
             }
             UpdateUIStates();
@@ -327,6 +330,7 @@ namespace NightDriver
                                 byte[] bytes = StreamReadExact(stream, width * height * 3);
                                 visualizerColorData.fixedWidth = width;
                                 visualizerColorData.ColorData = LEDInterop.GetColorsFromBytes(bytes, width * height);
+                                visualizerColorData.fixedWidth = width > 1 ? width : 0;
                             }
                             return;
                         }

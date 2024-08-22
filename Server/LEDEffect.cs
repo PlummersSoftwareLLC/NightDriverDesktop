@@ -25,6 +25,14 @@ namespace NightDriver
             }
         }
 
+        public virtual void OnStart()
+        {
+        }
+
+        public virtual void OnStop()
+        {
+        }
+
         protected virtual void Render(ILEDGraphics graphics)
         {
             Debug.Assert(false, "Render called in base class");

@@ -18,12 +18,12 @@ namespace NightDriver
 {
     internal class LEDVisualizer : Panel
     {
-        uint xSpacing = 1;
-        uint ySpacing = 1;
+        double xSpacing = 1;
+        double ySpacing = 1;
         uint xMargin = 4;
         uint yMargin = 4;
-        uint xSize = 8;
-        uint ySize = 8;
+        double xSize = 8;
+        double ySize = 8;
 
         // CalculateMaxSquareSize
         //
@@ -36,13 +36,15 @@ namespace NightDriver
                 return;
 
             uint totalSquares = (uint)ColorData.Length;
-            uint availableWidth = (uint)ClientRectangle.Width - xMargin * 2;
-            uint availableHeight = (uint)ClientRectangle.Height - yMargin * 2;
+            var availableWidth = (uint)ClientRectangle.Width - xMargin * 2;
+            var availableHeight = (uint)ClientRectangle.Height - yMargin * 2;
 
             if (fixedWidth > 0)
             {
                 // Calculate the size of each square based on the fixed number of columns
                 xSize = (availableWidth - (fixedWidth - 1) * xSpacing) / fixedWidth;
+                if (xSize < 1)
+                    xSize = 1;
 
                 // Calculate the number of rows needed based on the total number of squares and fixed width
                 uint numRows = (totalSquares + fixedWidth - 1) / fixedWidth;
@@ -67,8 +69,8 @@ namespace NightDriver
 
             while (maxSize > 0)
             {
-                uint squaresPerRow = (availableWidth + xSpacing) / (maxSize + xSpacing);
-                uint squaresPerColumn = (availableHeight + ySpacing) / (maxSize + ySpacing);
+                uint squaresPerRow = (uint) ((availableWidth + xSpacing) / (maxSize + xSpacing));
+                uint squaresPerColumn = (uint) ((availableHeight + ySpacing) / (maxSize + ySpacing));
 
                 if (squaresPerRow * squaresPerColumn >= totalSquares)
                 {
@@ -147,24 +149,45 @@ namespace NightDriver
             }
 
             uint availableWidth = (uint)ClientRectangle.Width - xMargin * 2;
-            uint availableXSlots = fixedWidth > 0 ? fixedWidth : availableWidth / (xSize + xSpacing);
+            uint availableXSlots = (uint)(fixedWidth > 0 ? fixedWidth : availableWidth / (xSize + xSpacing));
             uint availableHeight = (uint)ClientRectangle.Height - yMargin * 2;
-            uint availableYSlots = availableHeight / (ySize + ySpacing);
+            uint availableYSlots = (uint)(availableHeight / (ySize + ySpacing));
 
             // The Draw thread will also lock the buffer, and that synchronization allows us to 
             // avoid showing a frame for visualization when the buffer is halfway through a render
 
             lock (ColorData)
             {
-                uint iSlot = 0;
-                for (uint y = 0; y < availableYSlots; y++)
-                    for (uint x = 0; x < availableXSlots; x++)
-                        if (iSlot < ColorData.Length)
-                            e.Graphics.FillRectangle(new SolidBrush(ColorData[iSlot++].GetColor()),
-                                                     xMargin + x * (xSize + xSpacing),
-                                                     yMargin + y * (ySize + ySpacing),
-                                                     xSize,
-                                                     ySize);
+                int totalSlots = (int)(availableYSlots * availableXSlots);
+                int fixedWidth = (int)availableXSlots;
+
+                var rectangles = new List<(Rectangle Rect, Color Color)>();
+
+                Parallel.For(0, totalSlots, new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount }, iSlot =>
+                {
+                    if (iSlot < ColorData.Length)
+                    {
+                        int y = iSlot / fixedWidth;
+                        int x = iSlot % fixedWidth;
+
+                        int xPos = (int)(xMargin + x * (xSize + xSpacing));
+                        int yPos = (int)(yMargin + ((ColorData.Length / fixedWidth) - 1 - y) * (ySize + ySpacing));
+
+                        var rect = new Rectangle(xPos, yPos, (int)xSize, (int)ySize);
+                        var color = ColorData[iSlot].GetColor();
+
+                        lock (rectangles)
+                        {
+                            rectangles.Add((rect, color));
+                        }
+                    }
+                });
+
+                // Now draw all rectangles on the UI thread
+                foreach (var (rect, color) in rectangles)
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(color), rect);
+                }
             }
         }
     }

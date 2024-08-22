@@ -96,7 +96,7 @@ namespace NightDriver
         public virtual String Name { get; private set; }
         public List<LightStrip> LightStrips { get; set; } = new List<LightStrip>();
         public List<ScheduledEffect> LEDEffects { get; set; } = new List<ScheduledEffect>();
-
+        public int iCurrentEffect = -1;
 
         [JsonIgnore]
         public CRGB[] LEDs { get; private set; }
@@ -124,7 +124,7 @@ namespace NightDriver
         {
             get
             {
-                return 30000;
+                return 60;
             }
         }
 
@@ -228,7 +228,17 @@ namespace NightDriver
 
                 int iEffect = (int)((DateTime.Now - StartTime).TotalSeconds / SecondsPerEffect) + _iEffectOffset;
                 iEffect %= effectCount;
+
+                if (iEffect != iCurrentEffect)
+                {
+                    if (iCurrentEffect >= 0)
+                        LEDEffects.ElementAt(iCurrentEffect).Effect.OnStop();
+                    LEDEffects.ElementAt(iEffect).Effect.OnStart();
+                    iCurrentEffect = iEffect;
+                }
+
                 var effect = enabledEffects.ElementAt(iEffect);
+                ConsoleApp.Stats.WriteLine("Effect: " + effect.Effect.EffectName + " " + iEffect + " of " + effectCount);
 
                 // We lock the CRGB buffer so that when the UI follows the same approach, we don't
                 // get half-rendered frames in the LEDVisualizer
@@ -1045,8 +1055,14 @@ namespace NightDriver
             };
             LEDEffects = new List<ScheduledEffect>()
             {
+                new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new TextBitmapEffect("Dave's Garage", CRGB.Black, CRGB.White)),
+                new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\coding.mp4")),
+                new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\space.mp4")),
                 new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\fire3.mp4")),
-                //new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new TextBitmapEffect("Dave's Garage", CRGB.Black, CRGB.White)),
+                new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\greenbar.mp4")),
+                new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\matrix.mp4")),
+                new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\sunsets.mp4")),
+                new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\wide.mp4")),
                 //new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, EffectsDatabase.OneDirectionStars ),
                 //new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, EffectsDatabase.ClassicTwinkle ),
             };
