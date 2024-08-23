@@ -1,11 +1,8 @@
-﻿using FFmpeg.AutoGen;
-using FFMediaToolkit;
+﻿using FFMediaToolkit;
 using FFMediaToolkit.Decoding;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using System;
-using System.Runtime.InteropServices;
 using System.Reflection;
 
 // winget install "FFmpeg (Shared)"
@@ -20,6 +17,9 @@ namespace NightDriver
 
         public VideoPlayerEffect(string videoFilePath)
         {
+            if (!Environment.Is64BitProcess)
+                throw new InvalidOperationException("This effect must be part of a 64-bit executable.");
+
             _videoFilePath = videoFilePath;
             FFmpegLoader.FFmpegPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "native", "ffmpeg");
             _resizedFrame = new Image<Rgb24>(512, 32);
