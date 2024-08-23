@@ -11,6 +11,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="native\ffmpeg\avcodec-61.dll" />
+    <None Remove="native\ffmpeg\avformat-61.dll" />
+    <None Remove="native\ffmpeg\avutil-59.dll" />
+    <None Remove="native\ffmpeg\swresample-5.dll" />
+    <None Remove="native\ffmpeg\swscale-8.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="native\ffmpeg\avcodec-61.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="native\ffmpeg\avformat-61.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="native\ffmpeg\avutil-59.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="native\ffmpeg\swresample-5.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="native\ffmpeg\swscale-8.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FFMediaToolkit" Version="4.5.1" />
     <PackageReference Include="FFmpeg.AutoGen" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
