@@ -58,6 +58,8 @@ namespace NightDriver
             buttonNewStrip = new Button();
             checkGroupItems = new CheckBox();
             panelVisualizer = new LEDVisualizer();
+            buttonNextEffect = new Button();
+            buttonPreviousEffect = new Button();
             tabLocations = new TabPage();
             splitContainer2 = new SplitContainer();
             button1 = new Button();
@@ -305,6 +307,8 @@ namespace NightDriver
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(panelVisualizer);
+            splitContainer1.Panel2.Controls.Add(buttonNextEffect);
+            splitContainer1.Panel2.Controls.Add(buttonPreviousEffect);
             splitContainer1.Panel2.Controls.Add(StopButton);
             splitContainer1.Panel2.Controls.Add(StartButton);
             splitContainer1.Size = new Size(1169, 573);
@@ -362,6 +366,30 @@ namespace NightDriver
             panelVisualizer.Name = "panelVisualizer";
             panelVisualizer.Size = new Size(1166, 250);
             panelVisualizer.TabIndex = 3;
+            // 
+            // buttonNextEffect
+            // 
+            buttonNextEffect.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonNextEffect.Enabled = false;
+            buttonNextEffect.Location = new Point(81, 256);
+            buttonNextEffect.Name = "buttonNextEffect";
+            buttonNextEffect.Size = new Size(75, 23);
+            buttonNextEffect.TabIndex = 0;
+            buttonNextEffect.Text = "Next >";
+            buttonNextEffect.UseVisualStyleBackColor = true;
+            buttonNextEffect.Click += NextEffectButton_Click;
+            // 
+            // buttonPreviousEffect
+            // 
+            buttonPreviousEffect.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonPreviousEffect.Enabled = false;
+            buttonPreviousEffect.Location = new Point(0, 256);
+            buttonPreviousEffect.Name = "buttonPreviousEffect";
+            buttonPreviousEffect.Size = new Size(75, 23);
+            buttonPreviousEffect.TabIndex = 0;
+            buttonPreviousEffect.Text = "< Previous";
+            buttonPreviousEffect.UseVisualStyleBackColor = true;
+            buttonPreviousEffect.Click += PreviousEffectButton_Click;
             // 
             // tabLocations
             // 
@@ -739,7 +767,7 @@ namespace NightDriver
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "MainForm";
-            Text = "NightDriver Desktop";
+            Text = "F";
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             tabColorData.ResumeLayout(false);
@@ -843,5 +871,7 @@ namespace NightDriver
         private Button buttonStopMonitor;
         private Button buttonStartMonitor;
         private System.ComponentModel.BackgroundWorker monitorWorker;
+        private Button buttonNextEffect;
+        private Button buttonPreviousEffect;
     }
 }

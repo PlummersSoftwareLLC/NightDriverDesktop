@@ -36,7 +36,7 @@ namespace NightDriver
             {
                 float x = rand.Next(width);
                 float y = rand.Next(height);
-                float speed = (float)(rand.NextDouble() * 0.025 + 0.005); // Slowed down speed by 50%
+                float speed = (float)(rand.NextDouble() * 0.015); // Slowed down speed by 50%
                 Color color = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)); // Random color
                 stars.Add(new Star(x, y, speed, color));
             }
@@ -51,15 +51,21 @@ namespace NightDriver
             foreach (var star in stars)
             {
                 // Move the star towards the center
-                star.X += (star.X - width / 2) * star.Speed;
-                star.Y += (star.Y - height / 2) * star.Speed;
+                var deltaX = star.X - width / 2.0f;
+                if (Math.Abs(deltaX) < 0.1f)
+                    deltaX = Math.Sign(deltaX) * 0.1f; // Prevent division by zero (avoid NaN
+                var deltaY = star.Y - height / 4.0f;
+                if (Math.Abs(deltaY) < 0.1f)
+                    deltaY = Math.Sign(deltaY) * 0.1f; // Prevent division by zero (avoid NaN  
+                star.X += deltaX * star.Speed;
+                star.Y += deltaY * star.Speed;
 
                 // If the star goes out of bounds, reset its position
                 if (star.X < 0 || star.X >= width || star.Y < 0 || star.Y >= height)
                 {
                     star.X = rand.Next(width);
                     star.Y = rand.Next(height);
-                    star.Speed = (float)(rand.NextDouble() * 0.005 + 0.005); // New speed, slowed by 50%
+                    star.Speed = (float)(rand.NextDouble() * 0.015); // New speed, slowed by 50%
                     star.StarColor = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)); // New random color
                 }
 
@@ -99,17 +105,33 @@ namespace NightDriver
 
                     Starfield(graphicsBitmap, (int)graphics.Width, (int)graphics.Height); // Draw the Starfield effect
 
-                    // Create a font and brush for drawing textF
+                    // Create a font and brush for drawing text
                     var font = new Font("Arial", fontSize, FontStyle.Regular);
                     var brush = new SolidBrush(Color.FromArgb(_textColor.r, _textColor.g, _textColor.b));
 
-                    // Calculate text position
+                    // Calculate text position for the main text (_text)
                     var textSize = graphicsBitmap.MeasureString(_text, font);
                     var x = (graphics.Width - textSize.Width) / 2;
-                    var y = (graphics.Height - textSize.Height) / 2;
+                    var y = (graphics.Height - textSize.Height) /  2;
 
-                    // Draw text on the bitmap
+                    // Draw the main text on the bitmap
                     graphicsBitmap.DrawString(_text, font, brush, x, y);
+
+                    // Get the current date and time in the local format
+                    var currentTime = DateTime.Now.ToString("hh:mm tt"); // Time (12-hour format with AM/PM)
+                    var currentDay = DateTime.Now.ToString("dddd");       // Day of the week
+                    var currentDate = DateTime.Now.ToString("MMMM dd");   // Month and day
+
+                    // Draw the current time
+                    font = new Font("Arial", fontSize / 1.6f, FontStyle.Bold);
+                    graphicsBitmap.DrawString(currentTime, font, brush, 430, 6);
+
+                    // Draw the current day
+                    font = new Font("Arial", fontSize / 2, FontStyle.Regular);
+                    graphicsBitmap.DrawString(currentDay, font, brush, 2, 0);
+
+                    // Draw the current date
+                    graphicsBitmap.DrawString(currentDate, font, brush, 2, 13);
                 }
 
                 // Render the bitmap onto the LED display

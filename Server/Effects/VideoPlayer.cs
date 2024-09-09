@@ -36,7 +36,7 @@ namespace NightDriver
             {
                 _mediaFile = MediaFile.Open(_videoFilePath);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 MessageBox.Show("Can't load video: " + _videoFilePath);
                 throw;

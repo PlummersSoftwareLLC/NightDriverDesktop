@@ -32,7 +32,7 @@ namespace NightDriver
 
         private List<Site> SampleLocations = new List<Site>
         {
-            new Banner()            { FramesPerSecond = 45 },  
+            new Banner()            { FramesPerSecond = 60 },  
             /*
             new Tree()              { FramesPerSecond = 28 },
 

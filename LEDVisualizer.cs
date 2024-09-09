@@ -14,6 +14,8 @@
 //---------------------------------------------------------------------------
 
 
+using FFmpeg.AutoGen;
+
 namespace NightDriver
 {
     internal class LEDVisualizer : Panel
@@ -41,8 +43,11 @@ namespace NightDriver
 
             if (fixedWidth > 0)
             {
+                xSpacing = ySpacing = 0;
+                uint height = totalSquares / fixedWidth;
+
                 // Calculate the size of each square based on the fixed number of columns
-                xSize = (availableWidth - (fixedWidth - 1) * xSpacing) / fixedWidth;
+                xSize = (int)(availableWidth - (fixedWidth - 1) * xSpacing) / fixedWidth;
                 if (xSize < 1)
                     xSize = 1;
 

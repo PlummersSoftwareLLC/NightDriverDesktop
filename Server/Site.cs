@@ -1051,18 +1051,16 @@ namespace NightDriver
         {
             LightStrips = new List<LightStrip>()
             {
-                new LightStrip("192.168.1.98", "Banner", true, WIDTH, HEIGHT, START, true, 0, false) { FramesPerBuffer = 250, BatchSize = 25, CompressData = true },  // 216
+                new LightStrip("192.168.1.98", "Banner", true, WIDTH, HEIGHT, START, true, 0, false) { FramesPerBuffer = 500, BatchSize = 25, CompressData = true },  // 216
             };
             LEDEffects = new List<ScheduledEffect>()
             {
                 new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new TextBitmapEffect("Dave's Garage", CRGB.Black, CRGB.White)),
-                new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\coding.mp4")),
-                new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\space.mp4")),
-                new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\fire3.mp4")),
-                new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\greenbar.mp4")),
-                new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\matrix.mp4")),
-                new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\sunsets.mp4")),
-                new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\wide.mp4")),
+                //new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\coding.mp4")),
+                //new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\space.mp4")),
+                //new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\fire3.mp4")),
+                //new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\greenbar.mp4")),
+                //new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, new VideoPlayerEffect(@"c:\AMD\sunsets.mp4")),
                 //new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, EffectsDatabase.OneDirectionStars ),
                 //new ScheduledEffect(ScheduledEffect.AllDays,  0, 24, EffectsDatabase.ClassicTwinkle ),
             };

@@ -1,8 +1,8 @@
 ﻿//+--------------------------------------------------------------------------
 //
-// NightDriver.Net - (c) 2019 Dave Plummer.  All Rights Reserved.
+// NightDriverDesktop - (c) 2024 Dave Plummer.  All Rights Reserved.
 //
-// File:        StripListItem.cs
+// File:        StripListView.cs
 //
 // Description:
 //
@@ -11,7 +11,6 @@
 // History:     Dec-23-2023        Davepl      Created
 //
 //---------------------------------------------------------------------------
-
 
 using System.Collections;
 using System.Diagnostics;

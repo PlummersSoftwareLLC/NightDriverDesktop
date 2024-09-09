@@ -1,6 +1,6 @@
 ﻿//+--------------------------------------------------------------------------
 //
-// NightDriver.Net - (c) 2019 Dave Plummer.  All Rights Reserved.
+// NightDriverDesktop - (c) 2024 Dave Plummer.  All Rights Reserved.
 //
 // File:        StripListView.cs
 //

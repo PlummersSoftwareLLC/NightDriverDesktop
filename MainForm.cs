@@ -64,6 +64,8 @@ namespace NightDriver
         private Task backgroundTask;
         private CancellationTokenSource cancellationTokenSource;
 
+        // When the user clicks the Start button we start the server
+
         private void StartButton_Click(object sender, EventArgs e)
         {
             ConsoleApp.Stats.WriteLine("Start Server");
@@ -80,6 +82,8 @@ namespace NightDriver
             FillListView();
         }
 
+        // When the user clicks the Stop button we stop the server
+
         private void StopButton_Click(object sender, EventArgs e)
         {
             ConsoleApp.Stats.WriteLine("Stop Server");
@@ -87,6 +91,9 @@ namespace NightDriver
             StartButton.Enabled = true;
             StopButton.Enabled = false;
         }
+
+        // When the user clicks the New Strip button we populate the main list and
+        // start the update timers
 
         public MainForm()
         {
@@ -121,6 +128,9 @@ namespace NightDriver
             textLog.Text = ConsoleApp.Stats.Text;
         }
 
+        // To fill the list view, we clear it and then iterate over all the strips
+        // in all of the sites and then add them to the listview
+
         internal void FillListView()
         {
             stripList.Groups.Clear();
@@ -139,6 +149,9 @@ namespace NightDriver
             UpdateUIStates();
         }
 
+        // To update the list view we iterate over all the strips and update the details and
+        // then sort this list
+
         internal void UpdateListView()
         {
             foreach (var strip in _server.AllStrips)
@@ -155,6 +168,8 @@ namespace NightDriver
             UpdateUIStates();
         }
 
+        // When the user clicks on a new or different entry in the list, we update the visualizer
+
         private void stripList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (stripList.SelectedIndices.Count > 0)
@@ -164,21 +179,27 @@ namespace NightDriver
                 panelVisualizer.fixedWidth = strip.StripSite.Width > 1 ? strip.StripSite.Width : 0;
 
                 visualizerColorData.fixedWidth = strip.StripSite.Height > 1 ? strip.StripSite.Width : 0;
-                timerVisualizer.Interval = Math.Clamp(1000 / strip.StripSite.FramesPerSecond, 20, 500);
+                timerVisualizer.Interval = Math.Clamp(1000 / strip.StripSite.FramesPerSecond, 50, 500);
             }
             UpdateUIStates();
         }
+
+        // When the timer fires we invalidate the visualizer to force it to redraw
 
         private void timerVisualizer_Tick(object sender, EventArgs e)
         {
             panelVisualizer.Invalidate();
         }
 
+        // Turn on or off the gruoping of items in the list view by their site
+
         private void checkGroupItems_CheckedChanged(object sender, EventArgs e)
         {
             stripList.ShowGroups = checkGroupItems.Checked;
             FillListView();
         }
+
+        // Change or set the sort column
 
         private void stripList_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -191,6 +212,8 @@ namespace NightDriver
             stripList.Sort();
         }
 
+        // Update all of the button states based on the current state of the listview and selection
+
         private void UpdateUIStates()
         {
             checkGroupItems.Checked = stripList.ShowGroups;
@@ -202,7 +225,12 @@ namespace NightDriver
 
             buttonStartMonitor.Enabled = !monitorWorker.IsBusy;
             buttonStopMonitor.Enabled = monitorWorker.IsBusy;
+
+            buttonNextEffect.Enabled = _server.IsRunning && stripList.SelectedIndices.Count >= 1;
+            buttonPreviousEffect.Enabled = _server.IsRunning && stripList.SelectedIndices.Count >= 1;
         }
+
+        // Step back or forward through the effect
 
         private void buttonPreviousEffect_Click(object sender, EventArgs e)
         {
@@ -217,6 +245,8 @@ namespace NightDriver
 
         }
 
+        // Delete a strip from the list
+
         private void buttonDeleteStrip_Click(object sender, EventArgs e)
         {
             var strip = stripList.SelectedItems[0].Tag as LightStrip;
@@ -224,10 +254,14 @@ namespace NightDriver
             FillListView();
         }
 
+        // Save the strips to a file
+
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _server.SaveStrips();
         }
+
+        // Load the strips from a file
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -235,11 +269,15 @@ namespace NightDriver
             FillListView();
         }
 
+        // Load pre-baked demo strips from an internal table in lieu of loading from a file or creating all new
+
         private void loadDemoFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _server.LoadStripsFromTable();
             FillListView();
         }
+
+        // Souvle-click on a strip to edit it
 
         private void stripList_DoubleClick(object sender, EventArgs e)
         {
@@ -252,6 +290,7 @@ namespace NightDriver
             }
         }
 
+       
         private void buttonStartMonitor_Click(object sender, EventArgs e)
         {
             if (!monitorWorker.IsBusy)
@@ -279,7 +318,7 @@ namespace NightDriver
 
             while (totalBytesRead < size)
             {
-                bytesRead = stream.Read(buffer, totalBytesRead, (int) size - totalBytesRead);
+                bytesRead = stream.Read(buffer, totalBytesRead, (int)size - totalBytesRead);
                 if (bytesRead == 0)
                 {
                     // Connection closed or end of stream reached
@@ -303,7 +342,7 @@ namespace NightDriver
         const UInt32 ColorDataPacketHeader = 0x434C5244;
         private void monitorWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            for (;;)
+            for (; ; )
             {
                 try
                 {
@@ -359,6 +398,19 @@ namespace NightDriver
                 MessageBox.Show("An error occurred: " + e.Error.Message);
             }
             UpdateUIStates();
+        }
+
+        private void NextEffectButton_Click(object sender, EventArgs e)
+        {
+            foreach (Site site in _server.AllSites.Values)
+                site.NextEffect();
+        }
+
+        private void PreviousEffectButton_Click(object sender, EventArgs e)
+        {
+            foreach (Site site in _server.AllSites.Values)
+                site.PreviousEffect();
+
         }
     }
 }

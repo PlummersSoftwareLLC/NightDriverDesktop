@@ -1,4 +1,18 @@
-﻿using System;
+﻿//--------------------------------------------------------------------------
+//
+// NightDriverDesktop - (c) 2024 Dave Plummer.  All Rights Reserved.
+//
+// File:        StripListView.cs
+//
+// Description:
+//
+//   A ListViewItem that represents a LightStrip entry in the main strip list
+//
+// History:     Dec-23-2023        Davepl      Created
+//
+//---------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
