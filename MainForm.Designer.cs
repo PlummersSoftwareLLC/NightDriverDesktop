@@ -53,10 +53,14 @@ namespace NightDriver
             tabColorData = new TabControl();
             tabMain = new TabPage();
             splitContainer1 = new SplitContainer();
+            groupBox2 = new GroupBox();
             buttonDeleteStrip = new Button();
             buttonEditStrip = new Button();
             buttonNewStrip = new Button();
-            checkGroupItems = new CheckBox();
+            groupBox1 = new GroupBox();
+            buttonDeleteLocation = new Button();
+            buttonEditLocation = new Button();
+            buttonNewLocation = new Button();
             panelVisualizer = new LEDVisualizer();
             buttonNextEffect = new Button();
             buttonPreviousEffect = new Button();
@@ -116,6 +120,8 @@ namespace NightDriver
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
+            groupBox2.SuspendLayout();
+            groupBox1.SuspendLayout();
             tabLocations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer2).BeginInit();
             splitContainer2.Panel1.SuspendLayout();
@@ -179,8 +185,9 @@ namespace NightDriver
             stripList.FullRowSelect = true;
             stripList.Location = new Point(0, 0);
             stripList.Name = "stripList";
+            stripList.OwnerDraw = true;
             stripList.ShowGroups = false;
-            stripList.Size = new Size(1169, 256);
+            stripList.Size = new Size(1169, 209);
             stripList.Sorting = SortOrder.Ascending;
             stripList.TabIndex = 2;
             stripList.UseCompatibleStateImageBehavior = false;
@@ -298,10 +305,8 @@ namespace NightDriver
             // 
             // splitContainer1.Panel1
             // 
-            splitContainer1.Panel1.Controls.Add(buttonDeleteStrip);
-            splitContainer1.Panel1.Controls.Add(buttonEditStrip);
-            splitContainer1.Panel1.Controls.Add(buttonNewStrip);
-            splitContainer1.Panel1.Controls.Add(checkGroupItems);
+            splitContainer1.Panel1.Controls.Add(groupBox2);
+            splitContainer1.Panel1.Controls.Add(groupBox1);
             splitContainer1.Panel1.Controls.Add(stripList);
             // 
             // splitContainer1.Panel2
@@ -315,48 +320,86 @@ namespace NightDriver
             splitContainer1.SplitterDistance = 287;
             splitContainer1.TabIndex = 4;
             // 
+            // groupBox2
+            // 
+            groupBox2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            groupBox2.Controls.Add(buttonDeleteStrip);
+            groupBox2.Controls.Add(buttonEditStrip);
+            groupBox2.Controls.Add(buttonNewStrip);
+            groupBox2.Location = new Point(907, 215);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(259, 55);
+            groupBox2.TabIndex = 6;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Devices";
+            // 
             // buttonDeleteStrip
             // 
-            buttonDeleteStrip.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonDeleteStrip.Location = new Point(929, 259);
+            buttonDeleteStrip.Location = new Point(9, 22);
             buttonDeleteStrip.Name = "buttonDeleteStrip";
             buttonDeleteStrip.Size = new Size(75, 23);
-            buttonDeleteStrip.TabIndex = 4;
+            buttonDeleteStrip.TabIndex = 5;
             buttonDeleteStrip.Text = "&Delete";
             buttonDeleteStrip.UseVisualStyleBackColor = true;
-            buttonDeleteStrip.Click += buttonDeleteStrip_Click;
             // 
             // buttonEditStrip
             // 
-            buttonEditStrip.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonEditStrip.Location = new Point(1010, 259);
+            buttonEditStrip.Location = new Point(90, 22);
             buttonEditStrip.Name = "buttonEditStrip";
             buttonEditStrip.Size = new Size(75, 23);
-            buttonEditStrip.TabIndex = 4;
+            buttonEditStrip.TabIndex = 6;
             buttonEditStrip.Text = "&Edit...";
             buttonEditStrip.UseVisualStyleBackColor = true;
             // 
             // buttonNewStrip
             // 
-            buttonNewStrip.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonNewStrip.Location = new Point(1091, 259);
+            buttonNewStrip.Location = new Point(171, 22);
             buttonNewStrip.Name = "buttonNewStrip";
             buttonNewStrip.Size = new Size(75, 23);
-            buttonNewStrip.TabIndex = 4;
+            buttonNewStrip.TabIndex = 7;
             buttonNewStrip.Text = "&New...";
             buttonNewStrip.UseVisualStyleBackColor = true;
             // 
-            // checkGroupItems
+            // groupBox1
             // 
-            checkGroupItems.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            checkGroupItems.AutoSize = true;
-            checkGroupItems.Location = new Point(0, 266);
-            checkGroupItems.Name = "checkGroupItems";
-            checkGroupItems.Size = new Size(156, 19);
-            checkGroupItems.TabIndex = 3;
-            checkGroupItems.Text = "Group Items by Location";
-            checkGroupItems.UseVisualStyleBackColor = true;
-            checkGroupItems.CheckedChanged += checkGroupItems_CheckedChanged;
+            groupBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            groupBox1.Controls.Add(buttonDeleteLocation);
+            groupBox1.Controls.Add(buttonEditLocation);
+            groupBox1.Controls.Add(buttonNewLocation);
+            groupBox1.Location = new Point(645, 215);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(256, 55);
+            groupBox1.TabIndex = 5;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Locations";
+            groupBox1.Enter += groupBox1_Enter;
+            // 
+            // buttonDeleteLocation
+            // 
+            buttonDeleteLocation.Location = new Point(7, 22);
+            buttonDeleteLocation.Name = "buttonDeleteLocation";
+            buttonDeleteLocation.Size = new Size(75, 23);
+            buttonDeleteLocation.TabIndex = 5;
+            buttonDeleteLocation.Text = "&Delete";
+            buttonDeleteLocation.UseVisualStyleBackColor = true;
+            // 
+            // buttonEditLocation
+            // 
+            buttonEditLocation.Location = new Point(88, 22);
+            buttonEditLocation.Name = "buttonEditLocation";
+            buttonEditLocation.Size = new Size(75, 23);
+            buttonEditLocation.TabIndex = 6;
+            buttonEditLocation.Text = "&Edit...";
+            buttonEditLocation.UseVisualStyleBackColor = true;
+            // 
+            // buttonNewLocation
+            // 
+            buttonNewLocation.Location = new Point(169, 22);
+            buttonNewLocation.Name = "buttonNewLocation";
+            buttonNewLocation.Size = new Size(75, 23);
+            buttonNewLocation.TabIndex = 7;
+            buttonNewLocation.Text = "&New...";
+            buttonNewLocation.UseVisualStyleBackColor = true;
             // 
             // panelVisualizer
             // 
@@ -773,10 +816,11 @@ namespace NightDriver
             tabColorData.ResumeLayout(false);
             tabMain.ResumeLayout(false);
             splitContainer1.Panel1.ResumeLayout(false);
-            splitContainer1.Panel1.PerformLayout();
             splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
+            groupBox2.ResumeLayout(false);
+            groupBox1.ResumeLayout(false);
             tabLocations.ResumeLayout(false);
             splitContainer2.Panel1.ResumeLayout(false);
             splitContainer2.Panel2.ResumeLayout(false);
@@ -822,10 +866,6 @@ namespace NightDriver
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Timer timerVisualizer;
         private SplitContainer splitContainer1;
-        private CheckBox checkGroupItems;
-        private Button buttonDeleteStrip;
-        private Button buttonEditStrip;
-        private Button buttonNewStrip;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem menuFile;
         private ToolStripMenuItem newToolStripMenuItem;
@@ -873,5 +913,13 @@ namespace NightDriver
         private System.ComponentModel.BackgroundWorker monitorWorker;
         private Button buttonNextEffect;
         private Button buttonPreviousEffect;
+        private GroupBox groupBox1;
+        private GroupBox groupBox2;
+        private Button buttonDeleteStrip;
+        private Button buttonEditStrip;
+        private Button buttonNewStrip;
+        private Button buttonDeleteLocation;
+        private Button buttonEditLocation;
+        private Button buttonNewLocation;
     }
 }

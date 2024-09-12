@@ -33,7 +33,6 @@ namespace NightDriver
         private List<Site> SampleLocations = new List<Site>
         {
             new Banner()            { FramesPerSecond = 60 },  
-            /*
             new Tree()              { FramesPerSecond = 28 },
 
             new CeilingStrip        { FramesPerSecond = 30 },
@@ -46,7 +45,6 @@ namespace NightDriver
             new ShopSouthWindows1() { FramesPerSecond = 2 },
             new ShopSouthWindows2() { FramesPerSecond = 2 },
             new ShopSouthWindows3() { FramesPerSecond = 2 },
-            */
         };
 
         internal class _Installation

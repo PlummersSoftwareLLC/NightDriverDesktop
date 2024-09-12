@@ -64,6 +64,59 @@ namespace NightDriver
         private Task backgroundTask;
         private CancellationTokenSource cancellationTokenSource;
 
+
+        // Restore window layout
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            // Restore window size, location, and state
+            if (ndd2.Properties.Settings.Default.WindowSize != Size.Empty)
+            {
+                this.Size = ndd2.Properties.Settings.Default.WindowSize;
+            }
+
+            if (ndd2.Properties.Settings.Default.WindowLocation != Point.Empty)
+            {
+                // Validate that the location is within screen bounds
+                Rectangle screenBounds = Screen.FromPoint(ndd2.Properties.Settings.Default.WindowLocation).WorkingArea;
+                Point location = ndd2.Properties.Settings.Default.WindowLocation;
+
+                // Adjust if off-screen
+                if (!screenBounds.Contains(new Rectangle(location, this.Size)))
+                {
+                    location = new Point(
+                        Math.Max(screenBounds.Left, Math.Min(location.X, screenBounds.Right - this.Width)),
+                        Math.Max(screenBounds.Top, Math.Min(location.Y, screenBounds.Bottom - this.Height))
+                    );
+                }
+
+                this.Location = location;
+            }
+        }
+
+        // Save Window layout on close
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+
+            // Persist window size, location, and state if normal or maximized (not minimized)
+            if (this.WindowState == FormWindowState.Normal || this.WindowState == FormWindowState.Maximized)
+            {
+                ndd2.Properties.Settings.Default.WindowSize = this.Size;
+                ndd2.Properties.Settings.Default.WindowLocation = this.Location;
+            }
+            else
+            {
+                // Handle minimized state (save as normal)
+                ndd2.Properties.Settings.Default.WindowSize = this.RestoreBounds.Size;
+                ndd2.Properties.Settings.Default.WindowLocation = this.RestoreBounds.Location;
+            }
+
+            // Save settings
+            ndd2.Properties.Settings.Default.Save();
+        }
         // When the user clicks the Start button we start the server
 
         private void StartButton_Click(object sender, EventArgs e)
@@ -141,7 +194,10 @@ namespace NightDriver
                 var name = strip.StripSite.Name;
                 ListViewGroup group = stripList.Groups[name];
                 if (group == null)
+                {
                     group = stripList.Groups.Add(name, name);
+                    stripList.Items.Add(new StripListItem(group,  name, null));
+                }
                 stripList.Items.Add(new StripListItem(group, strip.FriendlyName, strip));
             }
             if (stripList.Items.Count > 0)
@@ -150,13 +206,13 @@ namespace NightDriver
         }
 
         // To update the list view we iterate over all the strips and update the details and
-        // then sort this list
+        // then sort this li st
 
         internal void UpdateListView()
         {
             foreach (var strip in _server.AllStrips)
             {
-                var item = stripList.FindItemWithText(strip.FriendlyName, true, 0) as StripListItem;
+                StripListItem item = stripList.Items.OfType<StripListItem>().Where(item => item.Tag == strip).FirstOrDefault();
                 var newItem = StripListItem.CreateForStrip(null, strip);
                 if (item.UpdateColumnText(newItem))
                     stripList.Invalidate();
@@ -175,11 +231,14 @@ namespace NightDriver
             if (stripList.SelectedIndices.Count > 0)
             {
                 var strip = stripList.SelectedItems[0].Tag as LightStrip;
-                panelVisualizer.ColorData = strip.StripSite.LEDs;
-                panelVisualizer.fixedWidth = strip.StripSite.Width > 1 ? strip.StripSite.Width : 0;
+                if (strip != null)
+                {
+                    panelVisualizer.ColorData = strip.StripSite.LEDs;
+                    panelVisualizer.fixedWidth = strip.StripSite.Width > 1 ? strip.StripSite.Width : 0;
 
-                visualizerColorData.fixedWidth = strip.StripSite.Height > 1 ? strip.StripSite.Width : 0;
-                timerVisualizer.Interval = Math.Clamp(1000 / strip.StripSite.FramesPerSecond, 50, 500);
+                    visualizerColorData.fixedWidth = strip.StripSite.Height > 1 ? strip.StripSite.Width : 0;
+                    timerVisualizer.Interval = Math.Clamp(1000 / strip.StripSite.FramesPerSecond, 50, 500);
+                }
             }
             UpdateUIStates();
         }
@@ -189,14 +248,6 @@ namespace NightDriver
         private void timerVisualizer_Tick(object sender, EventArgs e)
         {
             panelVisualizer.Invalidate();
-        }
-
-        // Turn on or off the gruoping of items in the list view by their site
-
-        private void checkGroupItems_CheckedChanged(object sender, EventArgs e)
-        {
-            stripList.ShowGroups = checkGroupItems.Checked;
-            FillListView();
         }
 
         // Change or set the sort column
@@ -213,12 +264,9 @@ namespace NightDriver
         }
 
         // Update all of the button states based on the current state of the listview and selection
-
+        
         private void UpdateUIStates()
         {
-            checkGroupItems.Checked = stripList.ShowGroups;
-            checkGroupItems.Enabled = stripList.Groups.Count > 0;
-
             buttonDeleteStrip.Enabled = !_server.IsRunning && stripList.SelectedIndices.Count > 0;
             buttonEditStrip.Enabled = !_server.IsRunning && stripList.SelectedIndices.Count == 1;
             buttonNewStrip.Enabled = !_server.IsRunning;
@@ -290,7 +338,7 @@ namespace NightDriver
             }
         }
 
-       
+
         private void buttonStartMonitor_Click(object sender, EventArgs e)
         {
             if (!monitorWorker.IsBusy)
@@ -356,7 +404,7 @@ namespace NightDriver
                                 byte[] headerbuffer = StreamReadExact(stream, 3 * 4);
 
                                 UInt32 header = LEDInterop.BytesToDWORD(headerbuffer, 0);
-                                UInt32 width  = LEDInterop.BytesToDWORD(headerbuffer, 4);
+                                UInt32 width = LEDInterop.BytesToDWORD(headerbuffer, 4);
                                 UInt32 height = LEDInterop.BytesToDWORD(headerbuffer, 8);
 
                                 if (header != ColorDataPacketHeader)
@@ -410,6 +458,11 @@ namespace NightDriver
         {
             foreach (Site site in _server.AllSites.Values)
                 site.PreviousEffect();
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
 
         }
     }

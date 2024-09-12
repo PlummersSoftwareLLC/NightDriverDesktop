@@ -227,14 +227,15 @@ namespace NightDriver
             }
         }
 
-        public StripListItem(ListViewGroup group, String text, LightStrip strip)
+        public StripListItem(ListViewGroup group, String text, LightStrip? strip)
         {
             Text = text;
             Group = group;
             Tag = strip;
 
-            for (StripListViewColumnIndex i = 0; i < StripListViewColumnIndex.MAX; i++)
-                SubItems.Add(new ListViewItem.ListViewSubItem(this, "---"));
+            if (strip != null)
+                for (StripListViewColumnIndex i = 0; i < StripListViewColumnIndex.MAX; i++)
+                    SubItems.Add(new ListViewItem.ListViewSubItem(this, "---"));
         }
 
         public static StripListItem CreateForStrip(ListViewGroup group, LightStrip strip)
@@ -295,11 +296,13 @@ namespace NightDriver
         {
             var left = x as StripListItem;
             var right = y as StripListItem;
+
             if (left == null || right == null)
                 return 0;
+
             var mult = (SortOrder == SortOrder.Ascending) ? 1 : -1;
 
-            switch (Column)
+             switch (Column)
             {
                 case 0:
                     return left.Location.CompareTo(right.Location) * mult;
@@ -315,7 +318,24 @@ namespace NightDriver
                     return CompareTextNumbers(left, right, Column) * mult;
 
                 case StripListViewColumnIndex.iHost:
-                    return IpToLong(left.Host).CompareTo(IpToLong(right.Host)) * mult;
+                    if (left.Tag == null && right.Tag == null)                                  // Both are groups, compare by group name
+                    {
+                        return left.Group.Name.CompareTo(right.Group.Name) * mult;
+                    }
+                    if (left.Tag == null && right.Group == left.Group)
+                        return -1;                                                              // Group is always above a strip that belongs to it
+                    if (right.Tag == null && right.Group == left.Group)
+                        return 1;                                                               // Strip is always greater than a group
+                    if (left.Group == right.Group)
+                    {
+                        return left.Host.CompareTo(right.Host) * mult;
+                    }
+                    else
+                    {
+                        return left.Group.Name.CompareTo(right.Group.Name) * mult;
+                    }
+                    return 0;
+  
 
                 case StripListViewColumnIndex.iHasSocket:
                     return left.HasSocket.CompareTo(right.HasSocket) * mult;

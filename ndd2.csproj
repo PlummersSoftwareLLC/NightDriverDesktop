@@ -9,7 +9,7 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <LangVersion>11.0</LangVersion>
       <ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
-      <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
+      <ForceDesignerDpiUnaware>false</ForceDesignerDpiUnaware>
   </PropertyGroup>
 
   <ItemGroup>
