@@ -16,6 +16,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using System.Xml;
 using static System.Windows.Forms.AxHost;
 
@@ -49,12 +50,12 @@ namespace NightDriver
             if (e.Item.Selected)
             {
                 // Draw selected background
-                e.Graphics.FillRectangle(Brushes.LightSlateGray, e.Bounds);
+                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(192,192,192)), e.Bounds);
             }
             else
             {
                 // Draw default background
-                e.Graphics.FillRectangle(Brushes.LightGray, e.Bounds);
+                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(220, 220, 220)), e.Bounds);
             }
             // Let the default handler draw the rest of the items
             e.DrawDefault = false;
@@ -62,28 +63,29 @@ namespace NightDriver
 
         private void StripListView_MouseClick(object sender, MouseEventArgs e)
         {
-            // Determine if a group header was clicked
-            foreach (ListViewGroup group in this.Groups)
+            // Get the item at the mouse click location
+            var hitTestInfo = HitTest(e.Location);
+            if (hitTestInfo.Item != null && hitTestInfo.SubItem != null)
             {
-                // Find the bounds of the first item in each group
-                if (group.Items.Count > 0)
-                {
-                    ListViewItem firstItem = group.Items[0];
-                    Rectangle itemBounds = firstItem.GetBounds(ItemBoundsPortion.Entire);
-                    Rectangle groupHeaderBounds = new Rectangle(itemBounds.Left, itemBounds.Top - this.Font.Height - 6, this.Width, this.Font.Height + 8);
+                // Get the bounds of the first subitem (checkbox column)
+                Rectangle subItemBounds = hitTestInfo.SubItem.Bounds;
 
-                    // Check if the mouse click is within the bounds of the group header
-                    if (groupHeaderBounds.Contains(e.Location))
-                    {
-                        _selectedGroup = group; // Set the clicked group as selected
-                        this.Invalidate(); // Force the control to redraw
-                        return;
-                    }
+                // Define the checkbox bounds relative to the subitem bounds
+                Rectangle checkBounds = new Rectangle(subItemBounds.Left + 4, subItemBounds.Top + 4, 16, 16);
+
+                // Check if the click is within the checkbox bounds (translated into control coordinates)
+                if (hitTestInfo.Item.Tag == null && hitTestInfo.Item.SubItems.IndexOf(hitTestInfo.SubItem) == 0 && checkBounds.Contains(e.Location))
+                {
+                    // Toggle the checked state
+                    hitTestInfo.Item.Checked = !hitTestInfo.Item.Checked;
+
+                    // Redraw the item to reflect the checkbox state change
+                    Invalidate(hitTestInfo.SubItem.Bounds);
+
+                    // Raise item changed event
+                    OnItemChecked(new ItemCheckedEventArgs(hitTestInfo.Item));
                 }
             }
-
-            _selectedGroup = null; // Clear selection if no group header is clicked
-            this.Invalidate();
         }
 
         // Handle drawing of sub-items (default handling)
@@ -92,20 +94,34 @@ namespace NightDriver
             if (e.Item.Tag == null)
             {
                 // Custom drawing for items with null Tag
-                e.Graphics.FillRectangle(e.Item.Selected ? Brushes.Black : Brushes.CornflowerBlue, e.Bounds);
+                e.Graphics.FillRectangle(e.Item.Selected ? Brushes.Black : new SolidBrush(Color.FromArgb(150, 190, 255)), e.Bounds);
+
+                // Draw the checkbox
+                if (e.ColumnIndex == 0)
+                {
+                    Rectangle bounds = e.Bounds;
+                    CheckBoxRenderer.DrawCheckBox(e.Graphics,
+                                                  new Point(bounds.Left + 4, bounds.Top + 4),
+                                                  e.Item.Checked ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal);
+                }
+
                 // Create a bold font based on the control's font
                 using (Font boldFont = new Font(e.SubItem.Font, FontStyle.Bold))
                 {
                     // Draw the text in white using the bold font
-                    e.Graphics.DrawString(e.SubItem.Text, boldFont, e.Item.Selected ? Brushes.White : Brushes.Black, e.Bounds);
+                    Rectangle bounds = e.Bounds;
+                    bounds.X += 18;
+                    bounds.Y += 2;
+                    e.Graphics.DrawString(e.SubItem.Text, boldFont, e.Item.Selected ? Brushes.White : Brushes.Black, bounds);
                 }
             }
             else
             {
                 var bounds = e.Bounds;
+                bounds.Y += 2;
                 // Default drawing for other items
                 if (e.ColumnIndex == 0)
-                    bounds.X += 10;
+                    bounds.X += 18;
                 e.Graphics.DrawString(e.SubItem.Text, e.SubItem.Font, Brushes.Black, bounds);
             }
         }

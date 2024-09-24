@@ -36,7 +36,7 @@ namespace NightDriver
             {
                 float x = rand.Next(width);
                 float y = rand.Next(height);
-                float speed = (float)(rand.NextDouble() * 0.015); // Slowed down speed by 50%
+                float speed = (float)(rand.NextDouble() * 0.015) + 0.005f; // Slowed down speed by 50%
                 Color color = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)); // Random color
                 stars.Add(new Star(x, y, speed, color));
             }
@@ -53,10 +53,10 @@ namespace NightDriver
                 // Move the star towards the center
                 var deltaX = star.X - width / 2.0f;
                 if (Math.Abs(deltaX) < 0.1f)
-                    deltaX = Math.Sign(deltaX) * 0.1f; // Prevent division by zero (avoid NaN
+                    deltaX = Math.Sign(deltaX);
                 var deltaY = star.Y - height / 4.0f;
                 if (Math.Abs(deltaY) < 0.1f)
-                    deltaY = Math.Sign(deltaY) * 0.1f; // Prevent division by zero (avoid NaN  
+                    deltaY = Math.Sign(deltaY);
                 star.X += deltaX * star.Speed;
                 star.Y += deltaY * star.Speed;
 
@@ -65,7 +65,7 @@ namespace NightDriver
                 {
                     star.X = rand.Next(width);
                     star.Y = rand.Next(height);
-                    star.Speed = (float)(rand.NextDouble() * 0.015); // New speed, slowed by 50%
+                    star.Speed = (float)(rand.NextDouble() * 0.015) + 0.005f; // Slowed down speed by 50%
                     star.StarColor = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)); // New random color
                 }
 

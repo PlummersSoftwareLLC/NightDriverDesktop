@@ -46,5 +46,17 @@ namespace ndd2.Properties {
                 this["WindowLocation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        public int SplitterPos {
+            get {
+                return ((int)(this["SplitterPos"]));
+            }
+            set {
+                this["SplitterPos"] = value;
+            }
+        }
     }
 }

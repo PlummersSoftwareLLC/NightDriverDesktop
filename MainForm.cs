@@ -93,6 +93,12 @@ namespace NightDriver
 
                 this.Location = location;
             }
+
+            // Restore splitter pos
+            if (ndd2.Properties.Settings.Default.SplitterPos != 0)
+            {
+                splitContainer1.SplitterDistance = ndd2.Properties.Settings.Default.SplitterPos;
+            }
         }
 
         // Save Window layout on close
@@ -113,6 +119,9 @@ namespace NightDriver
                 ndd2.Properties.Settings.Default.WindowSize = this.RestoreBounds.Size;
                 ndd2.Properties.Settings.Default.WindowLocation = this.RestoreBounds.Location;
             }
+
+            // Save Splitter Pos
+            ndd2.Properties.Settings.Default.SplitterPos = splitContainer1.SplitterDistance;
 
             // Save settings
             ndd2.Properties.Settings.Default.Save();
@@ -196,7 +205,7 @@ namespace NightDriver
                 if (group == null)
                 {
                     group = stripList.Groups.Add(name, name);
-                    stripList.Items.Add(new StripListItem(group,  name, null));
+                    stripList.Items.Add(new StripListItem(group, name, null, _server.AllSites[name].Enabled));
                 }
                 stripList.Items.Add(new StripListItem(group, strip.FriendlyName, strip));
             }
@@ -264,7 +273,7 @@ namespace NightDriver
         }
 
         // Update all of the button states based on the current state of the listview and selection
-        
+
         private void UpdateUIStates()
         {
             buttonDeleteStrip.Enabled = !_server.IsRunning && stripList.SelectedIndices.Count > 0;
@@ -464,6 +473,18 @@ namespace NightDriver
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+
+        }
+
+        private void stripList_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            var group = stripList.SelectedItems[0].Group;
+            var site = _server.AllSites[group.Header];
+            site.Enabled = e.Item.Checked;
         }
     }
 }

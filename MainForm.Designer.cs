@@ -135,7 +135,7 @@ namespace NightDriver
             // StartButton
             // 
             StartButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            StartButton.Location = new Point(1091, 256);
+            StartButton.Location = new Point(1091, 254);
             StartButton.Name = "StartButton";
             StartButton.Size = new Size(75, 23);
             StartButton.TabIndex = 0;
@@ -147,7 +147,7 @@ namespace NightDriver
             // 
             StopButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             StopButton.Enabled = false;
-            StopButton.Location = new Point(1010, 256);
+            StopButton.Location = new Point(1010, 254);
             StopButton.Name = "StopButton";
             StopButton.Size = new Size(75, 23);
             StopButton.TabIndex = 0;
@@ -157,6 +157,7 @@ namespace NightDriver
             // 
             // statusStrip1
             // 
+            statusStrip1.ImageScalingSize = new Size(32, 32);
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
             statusStrip1.Location = new Point(0, 648);
             statusStrip1.Name = "statusStrip1";
@@ -187,12 +188,13 @@ namespace NightDriver
             stripList.Name = "stripList";
             stripList.OwnerDraw = true;
             stripList.ShowGroups = false;
-            stripList.Size = new Size(1169, 209);
+            stripList.Size = new Size(1168, 209);
             stripList.Sorting = SortOrder.Ascending;
             stripList.TabIndex = 2;
             stripList.UseCompatibleStateImageBehavior = false;
             stripList.View = View.Details;
             stripList.ColumnClick += stripList_ColumnClick;
+            stripList.ItemChecked += stripList_ItemChecked;
             stripList.SelectedIndexChanged += stripList_SelectedIndexChanged;
             stripList.DoubleClick += stripList_DoubleClick;
             // 
@@ -317,8 +319,9 @@ namespace NightDriver
             splitContainer1.Panel2.Controls.Add(StopButton);
             splitContainer1.Panel2.Controls.Add(StartButton);
             splitContainer1.Size = new Size(1169, 573);
-            splitContainer1.SplitterDistance = 287;
+            splitContainer1.SplitterDistance = 286;
             splitContainer1.TabIndex = 4;
+            splitContainer1.SplitterMoved += splitContainer1_SplitterMoved;
             // 
             // groupBox2
             // 
@@ -407,14 +410,14 @@ namespace NightDriver
             panelVisualizer.ColorData = null;
             panelVisualizer.Location = new Point(0, 0);
             panelVisualizer.Name = "panelVisualizer";
-            panelVisualizer.Size = new Size(1166, 250);
+            panelVisualizer.Size = new Size(1166, 248);
             panelVisualizer.TabIndex = 3;
             // 
             // buttonNextEffect
             // 
             buttonNextEffect.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             buttonNextEffect.Enabled = false;
-            buttonNextEffect.Location = new Point(81, 256);
+            buttonNextEffect.Location = new Point(81, 254);
             buttonNextEffect.Name = "buttonNextEffect";
             buttonNextEffect.Size = new Size(75, 23);
             buttonNextEffect.TabIndex = 0;
@@ -426,7 +429,7 @@ namespace NightDriver
             // 
             buttonPreviousEffect.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             buttonPreviousEffect.Enabled = false;
-            buttonPreviousEffect.Location = new Point(0, 256);
+            buttonPreviousEffect.Location = new Point(0, 254);
             buttonPreviousEffect.Name = "buttonPreviousEffect";
             buttonPreviousEffect.Size = new Size(75, 23);
             buttonPreviousEffect.TabIndex = 0;
@@ -464,13 +467,13 @@ namespace NightDriver
             // 
             splitContainer2.Panel2.Controls.Add(ledVisualizer1);
             splitContainer2.Size = new Size(1169, 573);
-            splitContainer2.SplitterDistance = 336;
+            splitContainer2.SplitterDistance = 335;
             splitContainer2.TabIndex = 0;
             // 
             // button1
             // 
             button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button1.Location = new Point(925, 306);
+            button1.Location = new Point(925, 305);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 5;
@@ -480,7 +483,7 @@ namespace NightDriver
             // button2
             // 
             button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button2.Location = new Point(1006, 306);
+            button2.Location = new Point(1005, 305);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 6;
@@ -490,7 +493,7 @@ namespace NightDriver
             // button3
             // 
             button3.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button3.Location = new Point(1087, 306);
+            button3.Location = new Point(1087, 305);
             button3.Name = "button3";
             button3.Size = new Size(75, 23);
             button3.TabIndex = 7;
@@ -503,7 +506,7 @@ namespace NightDriver
             listLocations.Columns.AddRange(new ColumnHeader[] { columnLocartion, columnWidth, columnHeight, columnFPS, columnEffect });
             listLocations.Location = new Point(3, 3);
             listLocations.Name = "listLocations";
-            listLocations.Size = new Size(1159, 297);
+            listLocations.Size = new Size(1159, 296);
             listLocations.TabIndex = 0;
             listLocations.UseCompatibleStateImageBehavior = false;
             listLocations.View = View.Details;
@@ -537,7 +540,7 @@ namespace NightDriver
             ledVisualizer1.Dock = DockStyle.Fill;
             ledVisualizer1.Location = new Point(0, 0);
             ledVisualizer1.Name = "ledVisualizer1";
-            ledVisualizer1.Size = new Size(1165, 229);
+            ledVisualizer1.Size = new Size(1165, 230);
             ledVisualizer1.TabIndex = 4;
             // 
             // tabLogging
@@ -634,6 +637,7 @@ namespace NightDriver
             // 
             // menuStrip1
             // 
+            menuStrip1.ImageScalingSize = new Size(32, 32);
             menuStrip1.Items.AddRange(new ToolStripItem[] { menuFile, editToolStripMenuItem, viewToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
@@ -810,7 +814,7 @@ namespace NightDriver
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "MainForm";
-            Text = "F";
+            Text = "NightDriver Desktop";
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             tabColorData.ResumeLayout(false);

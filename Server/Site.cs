@@ -97,19 +97,21 @@ namespace NightDriver
         public List<LightStrip> LightStrips { get; set; } = new List<LightStrip>();
         public List<ScheduledEffect> LEDEffects { get; set; } = new List<ScheduledEffect>();
         public int iCurrentEffect = -1;
+        public bool Enabled { get; set; } = true;
 
         [JsonIgnore]
         public CRGB[] LEDs { get; private set; }
 
         public const int PIXELS_PER_METER144 = 144;
 
-        public Site(String name, uint width, uint height)
+        public Site(String name, uint width, uint height, bool enabled)
         {
             Width     = width;
             Height    = height;
             LEDs      = InitializePixels<CRGB>((int)LEDCount);
             Name      = name;
             StartTime = DateTime.Now;
+            Enabled   = enabled;
         }
 
         public int FramesPerSecond
@@ -167,6 +169,13 @@ namespace NightDriver
 
             while (!_token.IsCancellationRequested)
             {
+                // If this strip is disabled, we don't render or send data, but we still sleep for a bit to avoid spinning
+                if (Enabled == false)
+                {
+                    Thread.Sleep(100);
+                    continue;
+                }
+
                 DateTime timeNext = timeLastFrame + TimeSpan.FromSeconds(1.0 / (FramesPerSecond > 0 ? FramesPerSecond : 30));
                 DrawAndEnqueueAll(timeNext);
                 timeLastFrame = timeNext;
@@ -259,10 +268,12 @@ namespace NightDriver
                 ConsoleApp.Stats.WriteLine("MAIN2 DELAY");
 
             foreach (var controller in LightStrips)
+            {
                 if (controller.ReadyForData)
                     controller.CompressAndEnqueueData(LEDs, timestamp);
                 else
                     controller.Response.Reset();
+            }
         }
 
         protected uint GetPixelIndex(uint x, uint y)
@@ -952,7 +963,7 @@ namespace NightDriver
             new ScheduledEffect(ScheduledEffect.AllDays,  9, 22,  EffectsDatabase.Football_Effect_Seattle),
         };
 
-        public Cabana() : base("Cabana", CABANA_LENGTH, 1)
+        public Cabana() : base("Cabana", CABANA_LENGTH, 1, false)
         {
             LightStrips = new List<LightStrip>()
             {
@@ -1003,7 +1014,7 @@ namespace NightDriver
         const int BENCH_START   = 0;
         const int BENCH_LENGTH = 8 * 144;
 
-        public Bench() : base("Bench", BENCH_LENGTH, 1)
+        public Bench() : base("Bench", BENCH_LENGTH, 1, false)
         {
             LightStrips = new List<LightStrip>()
             {
@@ -1025,7 +1036,7 @@ namespace NightDriver
         const int START   = 0;
         const int LENGTH = 5*144 + 38;
 
-        public CeilingStrip() : base("Ceiling Strip", LENGTH, 1)
+        public CeilingStrip() : base("Ceiling Strip", LENGTH, 1, false)
         {
             LightStrips = new List<LightStrip>()
             {
@@ -1047,7 +1058,7 @@ namespace NightDriver
         const int WIDTH = 64 * 8;
         const int HEIGHT = 32;
 
-        public Banner() : base("Banner", WIDTH, HEIGHT)
+        public Banner() : base("Banner", WIDTH, HEIGHT, true)
         {
             LightStrips = new List<LightStrip>()
             {
@@ -1073,7 +1084,7 @@ namespace NightDriver
         const int TREE_START = 0;
         const int TREE_LENGTH = 1*144;
 
-        public Tree() : base("Tree", TREE_LENGTH, 1)
+        public Tree() : base("Tree", TREE_LENGTH, 1, false)
         {
             LightStrips = new List<LightStrip>()
             { 
@@ -1133,7 +1144,7 @@ namespace NightDriver
         const int TV_START = 0;
         const int TV_LENGTH = 144 * 5;
 
-        public TV() : base("TV", TV_LENGTH, 1)
+        public TV() : base("TV", TV_LENGTH, 1, false)
         {
             LightStrips = new List<LightStrip>()
             {
@@ -1165,7 +1176,7 @@ namespace NightDriver
         const int CUPBOARD_4_LENGTH = 144;          // Actuall 82, but 
         const int CUPBOARD_LENGTH = CUPBOARD_1_LENGTH + CUPBOARD_2_LENGTH + CUPBOARD_3_LENGTH + CUPBOARD_4_LENGTH;
 
-        public ShopCupboards() : base("Shop Cupboards", CUPBOARD_LENGTH, 1)
+        public ShopCupboards() : base("Shop Cupboards", CUPBOARD_LENGTH, 1, false)
         {
             LightStrips = new List<LightStrip>()
             {
@@ -1203,7 +1214,7 @@ namespace NightDriver
 
         const int WINDOW_LENGTH = WINDOW_1_LENGTH;
 
-        public ShopSouthWindows1() : base("Shop South Windows 1", WINDOW_LENGTH, 1)
+        public ShopSouthWindows1() : base("Shop South Windows 1", WINDOW_LENGTH, 1, false)
         {
             LightStrips = new List<LightStrip>()
             {
@@ -1227,7 +1238,7 @@ namespace NightDriver
 
         const int WINDOW_LENGTH = WINDOW_1_LENGTH;
 
-        public ShopSouthWindows2() : base("Shop South Windows 2", WINDOW_LENGTH, 1)
+        public ShopSouthWindows2() : base("Shop South Windows 2", WINDOW_LENGTH, 1, false)
         {
             LightStrips = new List<LightStrip>()
             {
@@ -1250,7 +1261,7 @@ namespace NightDriver
 
         const int WINDOW_LENGTH = WINDOW_1_LENGTH;
 
-        public ShopSouthWindows3() : base("Shop South Windows 3", WINDOW_LENGTH, 1)
+        public ShopSouthWindows3() : base("Shop South Windows 3", WINDOW_LENGTH, 1, false)
         {
             LightStrips = new List<LightStrip>()
             {

@@ -227,15 +227,20 @@ namespace NightDriver
             }
         }
 
-        public StripListItem(ListViewGroup group, String text, LightStrip? strip)
+        public StripListItem(ListViewGroup group, String text, LightStrip? strip, bool enabled = true)
         {
             Text = text;
             Group = group;
             Tag = strip;
-
             if (strip != null)
+            {
                 for (StripListViewColumnIndex i = 0; i < StripListViewColumnIndex.MAX; i++)
                     SubItems.Add(new ListViewItem.ListViewSubItem(this, "---"));
+            }
+            else
+            {
+                Checked = enabled;
+            }
         }
 
         public static StripListItem CreateForStrip(ListViewGroup group, LightStrip strip)
