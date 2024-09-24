@@ -1,33 +1,32 @@
-﻿using FFmpeg.AutoGen;
-using FFMediaToolkit;
+﻿using FFMediaToolkit;
 using FFMediaToolkit.Decoding;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using System;
-using System.Runtime.InteropServices;
-
-// winget install "FFmpeg (Shared)"
+using System.Reflection;
 
 namespace NightDriver
 {
     public unsafe class VideoPlayerEffect : LEDEffect
     {
-        private string _videoFilePath;
-        private MediaFile _mediaFile;
-        private Image<Rgb24> _resizedFrame;
+        private readonly string _videoFilePath;
+        private MediaFile? _mediaFile;
+        private readonly Image<Rgb24> _resizedFrame;
 
         public VideoPlayerEffect(string videoFilePath)
         {
+            if (!Environment.Is64BitProcess)
+                throw new InvalidOperationException("This effect must be part of a 64-bit executable.");
+
             _videoFilePath = videoFilePath;
-            FFmpegLoader.FFmpegPath = @"C:\Users\dave\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg.Shared_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-7.0.2-full_build-shared\bin\";
+            FFmpegLoader.FFmpegPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? ".", "native", "ffmpeg");
             _resizedFrame = new Image<Rgb24>(512, 32);
         }
 
         ~VideoPlayerEffect()
         {
             _mediaFile?.Dispose();
-            _resizedFrame?.Dispose();
+            _resizedFrame.Dispose();
         }
 
         public override void OnStart()
@@ -45,12 +44,12 @@ namespace NightDriver
 
         public override void OnStop()
         {
-            _mediaFile.Dispose();
+            _mediaFile?.Dispose();
         }
 
         protected override void Render(ILEDGraphics graphics)
         {
-            if (_mediaFile.Video.TryGetNextFrame(out var frame))
+            if (_mediaFile?.Video.TryGetNextFrame(out var frame) ?? false)
             {
                 using (var sourceImage = SixLabors.ImageSharp.Image.LoadPixelData<Bgr24>(
                     frame.Data,
@@ -87,7 +86,7 @@ namespace NightDriver
             else
             {
                 // End of video, reset to start. I'd rather seek but can't figure out how!
-                _mediaFile.Dispose();
+                _mediaFile?.Dispose();
                 _mediaFile = MediaFile.Open(_videoFilePath);
             }
         }
