@@ -91,7 +91,7 @@ namespace NightDriver
         protected override void Render(ILEDGraphics graphics)
         {
             // Define font size based on the LED matrix height
-            uint fontSize = (uint)(Math.Min(graphics.Width, graphics.Height) / 1.5); // Adjust font size as needed
+            uint fontSize = (uint)(Math.Min(graphics.Width, graphics.Height) / 3); // Adjust font size as needed
 
             // Create a bitmap buffer for the text
             using (var bitmap = new Bitmap((int)graphics.Width, (int)graphics.Height))

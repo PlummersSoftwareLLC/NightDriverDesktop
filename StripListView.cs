@@ -70,8 +70,12 @@ namespace NightDriver
                 // Get the bounds of the first subitem (checkbox column)
                 Rectangle subItemBounds = hitTestInfo.SubItem.Bounds;
 
+                // Get the size of the system checkbox
+                Size checkBoxSize = SystemInformation.MenuCheckSize;
+
                 // Define the checkbox bounds relative to the subitem bounds
-                Rectangle checkBounds = new Rectangle(subItemBounds.Left + 4, subItemBounds.Top + 4, 16, 16);
+                Rectangle checkBounds = new Rectangle(subItemBounds.Left + 4, subItemBounds.Top + 4, checkBoxSize.Width + 8, checkBoxSize.Height + 8);
+
 
                 // Check if the click is within the checkbox bounds (translated into control coordinates)
                 if (hitTestInfo.Item.Tag == null && hitTestInfo.Item.SubItems.IndexOf(hitTestInfo.SubItem) == 0 && checkBounds.Contains(e.Location))
@@ -91,6 +95,8 @@ namespace NightDriver
         // Handle drawing of sub-items (default handling)
         private void StripListView_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
+            Size checkBoxSize = SystemInformation.MenuCheckSize;
+
             if (e.Item.Tag == null)
             {
                 // Custom drawing for items with null Tag
@@ -110,7 +116,7 @@ namespace NightDriver
                 {
                     // Draw the text in white using the bold font
                     Rectangle bounds = e.Bounds;
-                    bounds.X += 18;
+                    bounds.X += checkBoxSize.Width;
                     bounds.Y += 2;
                     e.Graphics.DrawString(e.SubItem.Text, boldFont, e.Item.Selected ? Brushes.White : Brushes.Black, bounds);
                 }
@@ -121,7 +127,7 @@ namespace NightDriver
                 bounds.Y += 2;
                 // Default drawing for other items
                 if (e.ColumnIndex == 0)
-                    bounds.X += 18;
+                    bounds.X += checkBoxSize.Width;
                 e.Graphics.DrawString(e.SubItem.Text, e.SubItem.Font, Brushes.Black, bounds);
             }
         }

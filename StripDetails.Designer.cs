@@ -50,7 +50,7 @@
             buttonApply = new Button();
             buttonCancel = new Button();
             groupBox3 = new GroupBox();
-            comboLocation = new ComboBox();
+            labelLocation = new Label();
             label1 = new Label();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -267,7 +267,7 @@
             // 
             // groupBox3
             // 
-            groupBox3.Controls.Add(comboLocation);
+            groupBox3.Controls.Add(labelLocation);
             groupBox3.Controls.Add(label1);
             groupBox3.Location = new Point(12, 5);
             groupBox3.Name = "groupBox3";
@@ -276,22 +276,23 @@
             groupBox3.TabStop = false;
             groupBox3.Text = "LED Location";
             // 
-            // comboLocation
+            // labelLocation
             // 
-            comboLocation.FormattingEnabled = true;
-            comboLocation.Location = new Point(100, 22);
-            comboLocation.Name = "comboLocation";
-            comboLocation.Size = new Size(419, 23);
-            comboLocation.TabIndex = 0;
+            labelLocation.AutoSize = true;
+            labelLocation.Location = new Point(100, 26);
+            labelLocation.Name = "labelLocation";
+            labelLocation.Size = new Size(27, 15);
+            labelLocation.TabIndex = 1;
+            labelLocation.Text = "----";
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Location = new Point(41, 26);
             label1.Name = "label1";
-            label1.Size = new Size(53, 15);
+            label1.Size = new Size(56, 15);
             label1.TabIndex = 0;
-            label1.Text = "Location";
+            label1.Text = "Location:";
             label1.TextAlign = ContentAlignment.TopRight;
             // 
             // StripDetails
@@ -307,6 +308,7 @@
             Name = "StripDetails";
             SizeGripStyle = SizeGripStyle.Hide;
             Text = "LED Strip/Matrix Details";
+            Load += StripDetails_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
@@ -340,7 +342,7 @@
         private Button buttonApply;
         private Button buttonCancel;
         private GroupBox groupBox3;
-        private ComboBox comboLocation;
         private Label label1;
+        private Label labelLocation;
     }
 }

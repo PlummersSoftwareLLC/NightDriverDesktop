@@ -339,11 +339,23 @@ namespace NightDriver
         private void stripList_DoubleClick(object sender, EventArgs e)
         {
             var strip = stripList.SelectedItems[0].Tag as LightStrip;
-            StripDetails details = new StripDetails(_server, strip);
-            if (details.ShowDialog() == DialogResult.OK)
+            if (strip != null)
             {
-                details.StripDetails_Save();
-                FillListView();
+                using (StripDetails details = new StripDetails(_server, strip))
+                {
+                    // Center the dialog over the parent form
+                    details.StartPosition = FormStartPosition.Manual;
+                    details.Location = new Point(
+                        this.Location.X + (this.Width - details.Width) / 2,
+                        this.Location.Y + (this.Height - details.Height) / 2
+                    );
+
+                    if (details.ShowDialog() == DialogResult.OK)
+                    {
+                        details.StripDetails_Save();
+                        FillListView();
+                    }
+                }
             }
         }
 

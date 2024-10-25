@@ -6,11 +6,27 @@
 //
 // Description:
 //
-//   A ListViewItem that represents a LightStrip entry in the main strip list
+//   This file contains the implementation of a custom ListViewItem, specifically designed to represent 
+//   individual LightStrip entries within the main list of LightStrips in the NightDriverDesktop application.
+//
+//   The `StripListItem` class extends the basic functionality of a `ListViewItem` by associating it with 
+//   a `LightStrip` object. This allows the program to display and manage various properties of each LightStrip, 
+//   such as its host, connection status, Wi-Fi signal strength, power consumption, and more. Each column in 
+//   the ListView corresponds to a specific attribute of the LightStrip, making it easier to monitor the state 
+//   of each LightStrip at a glance.
+//
+//   The file also defines an enum `StripListViewColumnIndex` that assigns integer indices to each property 
+//   displayed in the ListView. These indices are used to reference the various columns when accessing or 
+//   updating the ListView items.
+//
+//   Additionally, the `StripListItemComparer` class is implemented to facilitate sorting of LightStrips 
+//   based on the selected column. It supports both ascending and descending order sorts for various data types, 
+//   including numeric values, IP addresses, and text.
 //
 // History:     Dec-23-2023        Davepl      Created
 //
 //---------------------------------------------------------------------------
+
 
 using System.Collections;
 using System.Diagnostics;

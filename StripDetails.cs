@@ -38,7 +38,7 @@ namespace NightDriver
 
         internal StripDetails(LEDServer server, LightStrip strip) : this()
         {
-            _server = server; 
+            _server = server;
             _strip = strip;
 
             textHostName.Text = strip.HostName;
@@ -52,11 +52,8 @@ namespace NightDriver
             checkReverse.Checked = strip.Reversed;
             comboChannel.SelectedIndex = strip.Channel;
 
-            foreach (var site in _server.AllSites.Values)
-                comboLocation.Items.Add(site.Name);
-
             if (_strip.StripSite != null)
-                comboLocation.SelectedItem = _strip.StripSite.Name; 
+                labelLocation.Text = _strip.StripSite.Name;
         }
 
         internal bool StripDetails_Save()
@@ -80,6 +77,14 @@ namespace NightDriver
                 MessageBox.Show("Invalid hostname. Please enter a valid hostname or IP address.");
                 return false;
             }
+
+            if (!textHostName.Text.Equals(_strip.HostName, StringComparison.OrdinalIgnoreCase) &&
+                _server.AllStrips.Any(strip => strip.HostName.Equals(textHostName.Text, StringComparison.OrdinalIgnoreCase)))
+            {
+                MessageBox.Show("A strip with that hostname already exists.");
+                return false;
+            }
+
 
             if (!Regex.IsMatch(textName.Text, @"^[A-Za-z][A-Za-z0-9]*$"))
             {
@@ -122,7 +127,7 @@ namespace NightDriver
             _strip.CompressData = checkCompress.Checked;
             _strip.RedGreenSwap = checkSwapRedGreen.Checked;
             _strip.Reversed = checkReverse.Checked;
-            _strip.Channel = (byte) comboChannel.SelectedIndex;
+            _strip.Channel = (byte)comboChannel.SelectedIndex;
             return true;
         }
 
@@ -135,6 +140,10 @@ namespace NightDriver
                 DialogResult = DialogResult.OK;
                 Close();
             }
+        }
+
+        private void StripDetails_Load(object sender, EventArgs e)
+        {
         }
     }
 }

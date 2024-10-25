@@ -8,8 +8,8 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <TargetFramework>net8.0-windows</TargetFramework>
     <LangVersion>11.0</LangVersion>
-      <ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
-      <ForceDesignerDpiUnaware>false</ForceDesignerDpiUnaware>
+    <ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
+    <ForceDesignerDpiUnaware>yes</ForceDesignerDpiUnaware>
   </PropertyGroup>
 
   <ItemGroup>

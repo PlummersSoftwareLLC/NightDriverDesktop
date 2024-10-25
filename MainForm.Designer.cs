@@ -135,9 +135,10 @@ namespace NightDriver
             // StartButton
             // 
             StartButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            StartButton.Location = new Point(1091, 254);
+            StartButton.Location = new Point(2024, 523);
+            StartButton.Margin = new Padding(6);
             StartButton.Name = "StartButton";
-            StartButton.Size = new Size(75, 23);
+            StartButton.Size = new Size(139, 49);
             StartButton.TabIndex = 0;
             StartButton.Text = "Start";
             StartButton.UseVisualStyleBackColor = true;
@@ -147,9 +148,10 @@ namespace NightDriver
             // 
             StopButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             StopButton.Enabled = false;
-            StopButton.Location = new Point(1010, 254);
+            StopButton.Location = new Point(1874, 523);
+            StopButton.Margin = new Padding(6);
             StopButton.Name = "StopButton";
-            StopButton.Size = new Size(75, 23);
+            StopButton.Size = new Size(139, 49);
             StopButton.TabIndex = 0;
             StopButton.Text = "Stop";
             StopButton.UseVisualStyleBackColor = true;
@@ -159,9 +161,10 @@ namespace NightDriver
             // 
             statusStrip1.ImageScalingSize = new Size(32, 32);
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
-            statusStrip1.Location = new Point(0, 648);
+            statusStrip1.Location = new Point(0, 1387);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(1200, 22);
+            statusStrip1.Padding = new Padding(2, 0, 26, 0);
+            statusStrip1.Size = new Size(2229, 42);
             statusStrip1.TabIndex = 1;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -169,7 +172,7 @@ namespace NightDriver
             // 
             toolStripStatusLabel1.BackColor = SystemColors.ButtonFace;
             toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            toolStripStatusLabel1.Size = new Size(118, 17);
+            toolStripStatusLabel1.Size = new Size(237, 32);
             toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // timerListView
@@ -185,10 +188,11 @@ namespace NightDriver
             stripList.ForeColor = Color.Black;
             stripList.FullRowSelect = true;
             stripList.Location = new Point(0, 0);
+            stripList.Margin = new Padding(6);
             stripList.Name = "stripList";
             stripList.OwnerDraw = true;
             stripList.ShowGroups = false;
-            stripList.Size = new Size(1168, 209);
+            stripList.Size = new Size(2164, 442);
             stripList.Sorting = SortOrder.Ascending;
             stripList.TabIndex = 2;
             stripList.UseCompatibleStateImageBehavior = false;
@@ -201,75 +205,75 @@ namespace NightDriver
             // colName
             // 
             colName.Text = "Name";
-            colName.Width = 100;
+            colName.Width = 200;
             // 
             // colHost
             // 
             colHost.Text = "Host";
-            colHost.Width = 100;
+            colHost.Width = 200;
             // 
             // colSocket
             // 
             colSocket.Text = "Socket";
-            colSocket.Width = 50;
+            colSocket.Width = 100;
             // 
             // colWiFi
             // 
             colWiFi.Text = "WiFi";
-            colWiFi.Width = 40;
+            colWiFi.Width = 80;
             // 
             // colStatus
             // 
             colStatus.Text = "Status";
-            colStatus.Width = 50;
+            colStatus.Width = 100;
             // 
             // colBPS
             // 
             colBPS.Text = "Bytes/Sec";
-            colBPS.Width = 80;
+            colBPS.Width = 160;
             // 
             // colClock
             // 
             colClock.Text = "Clock";
-            colClock.Width = 50;
+            colClock.Width = 100;
             // 
             // colBuffer
             // 
             colBuffer.Text = "Buffer";
-            colBuffer.Width = 70;
+            colBuffer.Width = 140;
             // 
             // colPower
             // 
             colPower.Text = "Power";
-            colPower.Width = 50;
+            colPower.Width = 100;
             // 
             // colFPS
             // 
             colFPS.Text = "FPS";
-            colFPS.Width = 40;
+            colFPS.Width = 80;
             // 
             // colOffset
             // 
             colOffset.DisplayIndex = 12;
             colOffset.Text = "Offset";
-            colOffset.Width = 50;
+            colOffset.Width = 100;
             // 
             // colConnects
             // 
             colConnects.DisplayIndex = 10;
             colConnects.Text = "Connects";
-            colConnects.Width = 70;
+            colConnects.Width = 140;
             // 
             // colQueue
             // 
             colQueue.DisplayIndex = 11;
             colQueue.Text = "Queue";
-            colQueue.Width = 50;
+            colQueue.Width = 100;
             // 
             // colEffect
             // 
             colEffect.Text = "Effect";
-            colEffect.Width = 190;
+            colEffect.Width = 380;
             // 
             // tabColorData
             // 
@@ -278,12 +282,12 @@ namespace NightDriver
             tabColorData.Controls.Add(tabLocations);
             tabColorData.Controls.Add(tabLogging);
             tabColorData.Controls.Add(tabColor);
-            tabColorData.Location = new Point(8, 34);
+            tabColorData.Location = new Point(15, 73);
             tabColorData.Margin = new Padding(0);
             tabColorData.Name = "tabColorData";
             tabColorData.Padding = new Point(0, 0);
             tabColorData.SelectedIndex = 0;
-            tabColorData.Size = new Size(1183, 607);
+            tabColorData.Size = new Size(2197, 1295);
             tabColorData.TabIndex = 3;
             // 
             // tabMain
@@ -291,17 +295,19 @@ namespace NightDriver
             tabMain.BackColor = Color.Transparent;
             tabMain.Controls.Add(splitContainer1);
             tabMain.ForeColor = Color.Black;
-            tabMain.Location = new Point(4, 24);
+            tabMain.Location = new Point(8, 50);
+            tabMain.Margin = new Padding(6);
             tabMain.Name = "tabMain";
-            tabMain.Padding = new Padding(3);
-            tabMain.Size = new Size(1175, 579);
+            tabMain.Padding = new Padding(6);
+            tabMain.Size = new Size(2181, 1237);
             tabMain.TabIndex = 0;
             tabMain.Text = "WiFi Control";
             // 
             // splitContainer1
             // 
             splitContainer1.Dock = DockStyle.Fill;
-            splitContainer1.Location = new Point(3, 3);
+            splitContainer1.Location = new Point(6, 6);
+            splitContainer1.Margin = new Padding(6);
             splitContainer1.Name = "splitContainer1";
             splitContainer1.Orientation = Orientation.Horizontal;
             // 
@@ -318,8 +324,9 @@ namespace NightDriver
             splitContainer1.Panel2.Controls.Add(buttonPreviousEffect);
             splitContainer1.Panel2.Controls.Add(StopButton);
             splitContainer1.Panel2.Controls.Add(StartButton);
-            splitContainer1.Size = new Size(1169, 573);
-            splitContainer1.SplitterDistance = 286;
+            splitContainer1.Size = new Size(2169, 1225);
+            splitContainer1.SplitterDistance = 611;
+            splitContainer1.SplitterWidth = 9;
             splitContainer1.TabIndex = 4;
             splitContainer1.SplitterMoved += splitContainer1_SplitterMoved;
             // 
@@ -329,36 +336,41 @@ namespace NightDriver
             groupBox2.Controls.Add(buttonDeleteStrip);
             groupBox2.Controls.Add(buttonEditStrip);
             groupBox2.Controls.Add(buttonNewStrip);
-            groupBox2.Location = new Point(907, 215);
+            groupBox2.Location = new Point(1682, 460);
+            groupBox2.Margin = new Padding(6);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(259, 55);
+            groupBox2.Padding = new Padding(6);
+            groupBox2.Size = new Size(481, 117);
             groupBox2.TabIndex = 6;
             groupBox2.TabStop = false;
             groupBox2.Text = "Devices";
             // 
             // buttonDeleteStrip
             // 
-            buttonDeleteStrip.Location = new Point(9, 22);
+            buttonDeleteStrip.Location = new Point(17, 47);
+            buttonDeleteStrip.Margin = new Padding(6);
             buttonDeleteStrip.Name = "buttonDeleteStrip";
-            buttonDeleteStrip.Size = new Size(75, 23);
+            buttonDeleteStrip.Size = new Size(139, 49);
             buttonDeleteStrip.TabIndex = 5;
             buttonDeleteStrip.Text = "&Delete";
             buttonDeleteStrip.UseVisualStyleBackColor = true;
             // 
             // buttonEditStrip
             // 
-            buttonEditStrip.Location = new Point(90, 22);
+            buttonEditStrip.Location = new Point(167, 47);
+            buttonEditStrip.Margin = new Padding(6);
             buttonEditStrip.Name = "buttonEditStrip";
-            buttonEditStrip.Size = new Size(75, 23);
+            buttonEditStrip.Size = new Size(139, 49);
             buttonEditStrip.TabIndex = 6;
             buttonEditStrip.Text = "&Edit...";
             buttonEditStrip.UseVisualStyleBackColor = true;
             // 
             // buttonNewStrip
             // 
-            buttonNewStrip.Location = new Point(171, 22);
+            buttonNewStrip.Location = new Point(318, 47);
+            buttonNewStrip.Margin = new Padding(6);
             buttonNewStrip.Name = "buttonNewStrip";
-            buttonNewStrip.Size = new Size(75, 23);
+            buttonNewStrip.Size = new Size(139, 49);
             buttonNewStrip.TabIndex = 7;
             buttonNewStrip.Text = "&New...";
             buttonNewStrip.UseVisualStyleBackColor = true;
@@ -369,9 +381,11 @@ namespace NightDriver
             groupBox1.Controls.Add(buttonDeleteLocation);
             groupBox1.Controls.Add(buttonEditLocation);
             groupBox1.Controls.Add(buttonNewLocation);
-            groupBox1.Location = new Point(645, 215);
+            groupBox1.Location = new Point(1196, 460);
+            groupBox1.Margin = new Padding(6);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(256, 55);
+            groupBox1.Padding = new Padding(6);
+            groupBox1.Size = new Size(475, 117);
             groupBox1.TabIndex = 5;
             groupBox1.TabStop = false;
             groupBox1.Text = "Locations";
@@ -379,27 +393,30 @@ namespace NightDriver
             // 
             // buttonDeleteLocation
             // 
-            buttonDeleteLocation.Location = new Point(7, 22);
+            buttonDeleteLocation.Location = new Point(13, 47);
+            buttonDeleteLocation.Margin = new Padding(6);
             buttonDeleteLocation.Name = "buttonDeleteLocation";
-            buttonDeleteLocation.Size = new Size(75, 23);
+            buttonDeleteLocation.Size = new Size(139, 49);
             buttonDeleteLocation.TabIndex = 5;
             buttonDeleteLocation.Text = "&Delete";
             buttonDeleteLocation.UseVisualStyleBackColor = true;
             // 
             // buttonEditLocation
             // 
-            buttonEditLocation.Location = new Point(88, 22);
+            buttonEditLocation.Location = new Point(163, 46);
+            buttonEditLocation.Margin = new Padding(6);
             buttonEditLocation.Name = "buttonEditLocation";
-            buttonEditLocation.Size = new Size(75, 23);
+            buttonEditLocation.Size = new Size(139, 49);
             buttonEditLocation.TabIndex = 6;
             buttonEditLocation.Text = "&Edit...";
             buttonEditLocation.UseVisualStyleBackColor = true;
             // 
             // buttonNewLocation
             // 
-            buttonNewLocation.Location = new Point(169, 22);
+            buttonNewLocation.Location = new Point(314, 47);
+            buttonNewLocation.Margin = new Padding(6);
             buttonNewLocation.Name = "buttonNewLocation";
-            buttonNewLocation.Size = new Size(75, 23);
+            buttonNewLocation.Size = new Size(139, 49);
             buttonNewLocation.TabIndex = 7;
             buttonNewLocation.Text = "&New...";
             buttonNewLocation.UseVisualStyleBackColor = true;
@@ -409,17 +426,19 @@ namespace NightDriver
             panelVisualizer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelVisualizer.ColorData = null;
             panelVisualizer.Location = new Point(0, 0);
+            panelVisualizer.Margin = new Padding(6);
             panelVisualizer.Name = "panelVisualizer";
-            panelVisualizer.Size = new Size(1166, 248);
+            panelVisualizer.Size = new Size(2163, 511);
             panelVisualizer.TabIndex = 3;
             // 
             // buttonNextEffect
             // 
-            buttonNextEffect.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonNextEffect.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             buttonNextEffect.Enabled = false;
-            buttonNextEffect.Location = new Point(81, 254);
+            buttonNextEffect.Location = new Point(150, 523);
+            buttonNextEffect.Margin = new Padding(6);
             buttonNextEffect.Name = "buttonNextEffect";
-            buttonNextEffect.Size = new Size(75, 23);
+            buttonNextEffect.Size = new Size(139, 49);
             buttonNextEffect.TabIndex = 0;
             buttonNextEffect.Text = "Next >";
             buttonNextEffect.UseVisualStyleBackColor = true;
@@ -427,11 +446,12 @@ namespace NightDriver
             // 
             // buttonPreviousEffect
             // 
-            buttonPreviousEffect.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonPreviousEffect.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             buttonPreviousEffect.Enabled = false;
-            buttonPreviousEffect.Location = new Point(0, 254);
+            buttonPreviousEffect.Location = new Point(2, 523);
+            buttonPreviousEffect.Margin = new Padding(6);
             buttonPreviousEffect.Name = "buttonPreviousEffect";
-            buttonPreviousEffect.Size = new Size(75, 23);
+            buttonPreviousEffect.Size = new Size(139, 49);
             buttonPreviousEffect.TabIndex = 0;
             buttonPreviousEffect.Text = "< Previous";
             buttonPreviousEffect.UseVisualStyleBackColor = true;
@@ -440,10 +460,11 @@ namespace NightDriver
             // tabLocations
             // 
             tabLocations.Controls.Add(splitContainer2);
-            tabLocations.Location = new Point(4, 24);
+            tabLocations.Location = new Point(8, 50);
+            tabLocations.Margin = new Padding(6);
             tabLocations.Name = "tabLocations";
-            tabLocations.Padding = new Padding(3);
-            tabLocations.Size = new Size(1175, 579);
+            tabLocations.Padding = new Padding(6);
+            tabLocations.Size = new Size(2181, 1237);
             tabLocations.TabIndex = 2;
             tabLocations.Text = "Locations";
             tabLocations.UseVisualStyleBackColor = true;
@@ -452,7 +473,8 @@ namespace NightDriver
             // 
             splitContainer2.BorderStyle = BorderStyle.Fixed3D;
             splitContainer2.Dock = DockStyle.Fill;
-            splitContainer2.Location = new Point(3, 3);
+            splitContainer2.Location = new Point(6, 6);
+            splitContainer2.Margin = new Padding(6);
             splitContainer2.Name = "splitContainer2";
             splitContainer2.Orientation = Orientation.Horizontal;
             // 
@@ -466,16 +488,18 @@ namespace NightDriver
             // splitContainer2.Panel2
             // 
             splitContainer2.Panel2.Controls.Add(ledVisualizer1);
-            splitContainer2.Size = new Size(1169, 573);
-            splitContainer2.SplitterDistance = 335;
+            splitContainer2.Size = new Size(2169, 1225);
+            splitContainer2.SplitterDistance = 716;
+            splitContainer2.SplitterWidth = 9;
             splitContainer2.TabIndex = 0;
             // 
             // button1
             // 
             button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button1.Location = new Point(925, 305);
+            button1.Location = new Point(1719, 657);
+            button1.Margin = new Padding(6);
             button1.Name = "button1";
-            button1.Size = new Size(75, 23);
+            button1.Size = new Size(139, 49);
             button1.TabIndex = 5;
             button1.Text = "&Delete";
             button1.UseVisualStyleBackColor = true;
@@ -483,9 +507,10 @@ namespace NightDriver
             // button2
             // 
             button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button2.Location = new Point(1005, 305);
+            button2.Location = new Point(1867, 657);
+            button2.Margin = new Padding(6);
             button2.Name = "button2";
-            button2.Size = new Size(75, 23);
+            button2.Size = new Size(139, 49);
             button2.TabIndex = 6;
             button2.Text = "&Edit...";
             button2.UseVisualStyleBackColor = true;
@@ -493,9 +518,10 @@ namespace NightDriver
             // button3
             // 
             button3.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button3.Location = new Point(1087, 305);
+            button3.Location = new Point(2020, 657);
+            button3.Margin = new Padding(6);
             button3.Name = "button3";
-            button3.Size = new Size(75, 23);
+            button3.Size = new Size(139, 49);
             button3.TabIndex = 7;
             button3.Text = "&New...";
             button3.UseVisualStyleBackColor = true;
@@ -504,9 +530,10 @@ namespace NightDriver
             // 
             listLocations.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             listLocations.Columns.AddRange(new ColumnHeader[] { columnLocartion, columnWidth, columnHeight, columnFPS, columnEffect });
-            listLocations.Location = new Point(3, 3);
+            listLocations.Location = new Point(6, 6);
+            listLocations.Margin = new Padding(6);
             listLocations.Name = "listLocations";
-            listLocations.Size = new Size(1159, 296);
+            listLocations.Size = new Size(2150, 633);
             listLocations.TabIndex = 0;
             listLocations.UseCompatibleStateImageBehavior = false;
             listLocations.View = View.Details;
@@ -539,17 +566,19 @@ namespace NightDriver
             ledVisualizer1.ColorData = null;
             ledVisualizer1.Dock = DockStyle.Fill;
             ledVisualizer1.Location = new Point(0, 0);
+            ledVisualizer1.Margin = new Padding(6);
             ledVisualizer1.Name = "ledVisualizer1";
-            ledVisualizer1.Size = new Size(1165, 230);
+            ledVisualizer1.Size = new Size(2165, 496);
             ledVisualizer1.TabIndex = 4;
             // 
             // tabLogging
             // 
             tabLogging.Controls.Add(textLog);
-            tabLogging.Location = new Point(4, 24);
+            tabLogging.Location = new Point(8, 50);
+            tabLogging.Margin = new Padding(6);
             tabLogging.Name = "tabLogging";
-            tabLogging.Padding = new Padding(3);
-            tabLogging.Size = new Size(1175, 579);
+            tabLogging.Padding = new Padding(6);
+            tabLogging.Size = new Size(2181, 1237);
             tabLogging.TabIndex = 1;
             tabLogging.Text = "Logging";
             tabLogging.UseVisualStyleBackColor = true;
@@ -560,10 +589,11 @@ namespace NightDriver
             textLog.BackColor = Color.Black;
             textLog.ForeColor = Color.Lime;
             textLog.Location = new Point(0, 0);
+            textLog.Margin = new Padding(6);
             textLog.Multiline = true;
             textLog.Name = "textLog";
             textLog.ScrollBars = ScrollBars.Vertical;
-            textLog.Size = new Size(1205, 801);
+            textLog.Size = new Size(2234, 1704);
             textLog.TabIndex = 0;
             // 
             // tabColor
@@ -573,10 +603,11 @@ namespace NightDriver
             tabColor.Controls.Add(buttonStartMonitor);
             tabColor.Controls.Add(textColorDataHost);
             tabColor.Controls.Add(visualizerColorData);
-            tabColor.Location = new Point(4, 24);
+            tabColor.Location = new Point(8, 50);
+            tabColor.Margin = new Padding(6);
             tabColor.Name = "tabColor";
-            tabColor.Padding = new Padding(3);
-            tabColor.Size = new Size(1175, 579);
+            tabColor.Padding = new Padding(6);
+            tabColor.Size = new Size(2181, 1237);
             tabColor.TabIndex = 3;
             tabColor.Text = "Color Data";
             tabColor.UseVisualStyleBackColor = true;
@@ -585,9 +616,10 @@ namespace NightDriver
             // 
             buttonStopMonitor.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             buttonStopMonitor.Enabled = false;
-            buttonStopMonitor.Location = new Point(1013, 550);
+            buttonStopMonitor.Location = new Point(1881, 1173);
+            buttonStopMonitor.Margin = new Padding(6);
             buttonStopMonitor.Name = "buttonStopMonitor";
-            buttonStopMonitor.Size = new Size(75, 23);
+            buttonStopMonitor.Size = new Size(139, 49);
             buttonStopMonitor.TabIndex = 1;
             buttonStopMonitor.Text = "Stop";
             buttonStopMonitor.UseVisualStyleBackColor = true;
@@ -596,18 +628,20 @@ namespace NightDriver
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 13);
+            label1.Location = new Point(22, 28);
+            label1.Margin = new Padding(6, 0, 6, 0);
             label1.Name = "label1";
-            label1.Size = new Size(89, 15);
+            label1.Size = new Size(178, 32);
             label1.TabIndex = 7;
             label1.Text = "IP or Hostname";
             // 
             // buttonStartMonitor
             // 
             buttonStartMonitor.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonStartMonitor.Location = new Point(1094, 550);
+            buttonStartMonitor.Location = new Point(2032, 1173);
+            buttonStartMonitor.Margin = new Padding(6);
             buttonStartMonitor.Name = "buttonStartMonitor";
-            buttonStartMonitor.Size = new Size(75, 23);
+            buttonStartMonitor.Size = new Size(139, 49);
             buttonStartMonitor.TabIndex = 2;
             buttonStartMonitor.Text = "Start";
             buttonStartMonitor.UseVisualStyleBackColor = true;
@@ -616,9 +650,10 @@ namespace NightDriver
             // textColorDataHost
             // 
             textColorDataHost.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textColorDataHost.Location = new Point(107, 10);
+            textColorDataHost.Location = new Point(199, 21);
+            textColorDataHost.Margin = new Padding(6);
             textColorDataHost.Name = "textColorDataHost";
-            textColorDataHost.Size = new Size(424, 23);
+            textColorDataHost.Size = new Size(784, 39);
             textColorDataHost.TabIndex = 6;
             textColorDataHost.Text = "192.168.8.235";
             // 
@@ -626,9 +661,10 @@ namespace NightDriver
             // 
             visualizerColorData.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             visualizerColorData.ColorData = null;
-            visualizerColorData.Location = new Point(3, 39);
+            visualizerColorData.Location = new Point(6, 83);
+            visualizerColorData.Margin = new Padding(6);
             visualizerColorData.Name = "visualizerColorData";
-            visualizerColorData.Size = new Size(1176, 505);
+            visualizerColorData.Size = new Size(2184, 1077);
             visualizerColorData.TabIndex = 5;
             // 
             // timerVisualizer
@@ -641,7 +677,8 @@ namespace NightDriver
             menuStrip1.Items.AddRange(new ToolStripItem[] { menuFile, editToolStripMenuItem, viewToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1200, 24);
+            menuStrip1.Padding = new Padding(11, 4, 0, 4);
+            menuStrip1.Size = new Size(2229, 44);
             menuStrip1.TabIndex = 4;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -649,154 +686,154 @@ namespace NightDriver
             // 
             menuFile.DropDownItems.AddRange(new ToolStripItem[] { loadDemoFileToolStripMenuItem, toolStripSeparator4, newToolStripMenuItem, openToolStripMenuItem, saveToolStripMenuItem, saveAsToolStripMenuItem, toolStripSeparator1, exitToolStripMenuItem });
             menuFile.Name = "menuFile";
-            menuFile.Size = new Size(37, 20);
+            menuFile.Size = new Size(71, 36);
             menuFile.Text = "&File";
             // 
             // loadDemoFileToolStripMenuItem
             // 
             loadDemoFileToolStripMenuItem.Name = "loadDemoFileToolStripMenuItem";
-            loadDemoFileToolStripMenuItem.Size = new Size(156, 22);
+            loadDemoFileToolStripMenuItem.Size = new Size(314, 44);
             loadDemoFileToolStripMenuItem.Text = "Load Demo File";
             loadDemoFileToolStripMenuItem.Click += loadDemoFileToolStripMenuItem_Click;
             // 
             // toolStripSeparator4
             // 
             toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new Size(153, 6);
+            toolStripSeparator4.Size = new Size(311, 6);
             // 
             // newToolStripMenuItem
             // 
             newToolStripMenuItem.Name = "newToolStripMenuItem";
-            newToolStripMenuItem.Size = new Size(156, 22);
+            newToolStripMenuItem.Size = new Size(314, 44);
             newToolStripMenuItem.Text = "&New...";
             // 
             // openToolStripMenuItem
             // 
             openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(156, 22);
+            openToolStripMenuItem.Size = new Size(314, 44);
             openToolStripMenuItem.Text = "Open...";
             openToolStripMenuItem.Click += openToolStripMenuItem_Click;
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            saveToolStripMenuItem.Size = new Size(156, 22);
+            saveToolStripMenuItem.Size = new Size(314, 44);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
             // saveAsToolStripMenuItem
             // 
             saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            saveAsToolStripMenuItem.Size = new Size(156, 22);
+            saveAsToolStripMenuItem.Size = new Size(314, 44);
             saveAsToolStripMenuItem.Text = "Save As...";
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(153, 6);
+            toolStripSeparator1.Size = new Size(311, 6);
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(156, 22);
+            exitToolStripMenuItem.Size = new Size(314, 44);
             exitToolStripMenuItem.Text = "E&xit";
             // 
             // editToolStripMenuItem
             // 
             editToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newEntryToolStripMenuItem, editEntryToolStripMenuItem, deleteEntryToolStripMenuItem });
             editToolStripMenuItem.Name = "editToolStripMenuItem";
-            editToolStripMenuItem.Size = new Size(39, 20);
+            editToolStripMenuItem.Size = new Size(74, 36);
             editToolStripMenuItem.Text = "&Edit";
             // 
             // newEntryToolStripMenuItem
             // 
             newEntryToolStripMenuItem.Name = "newEntryToolStripMenuItem";
-            newEntryToolStripMenuItem.Size = new Size(137, 22);
+            newEntryToolStripMenuItem.Size = new Size(278, 44);
             newEntryToolStripMenuItem.Text = "New Entry...";
             // 
             // editEntryToolStripMenuItem
             // 
             editEntryToolStripMenuItem.Name = "editEntryToolStripMenuItem";
-            editEntryToolStripMenuItem.Size = new Size(137, 22);
+            editEntryToolStripMenuItem.Size = new Size(278, 44);
             editEntryToolStripMenuItem.Text = "Edit Entry...";
             // 
             // deleteEntryToolStripMenuItem
             // 
             deleteEntryToolStripMenuItem.Name = "deleteEntryToolStripMenuItem";
-            deleteEntryToolStripMenuItem.Size = new Size(137, 22);
+            deleteEntryToolStripMenuItem.Size = new Size(278, 44);
             deleteEntryToolStripMenuItem.Text = "Delete Entry";
             // 
             // viewToolStripMenuItem
             // 
             viewToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { updateSpeedToolStripMenuItem, toolStripSeparator3, refreshToolStripMenuItem1 });
             viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            viewToolStripMenuItem.Size = new Size(44, 20);
+            viewToolStripMenuItem.Size = new Size(85, 36);
             viewToolStripMenuItem.Text = "View";
             // 
             // updateSpeedToolStripMenuItem
             // 
             updateSpeedToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { pausedToolStripMenuItem, lowToolStripMenuItem, mediumToolStripMenuItem, highToolStripMenuItem, toolStripSeparator2, refreshToolStripMenuItem });
             updateSpeedToolStripMenuItem.Name = "updateSpeedToolStripMenuItem";
-            updateSpeedToolStripMenuItem.Size = new Size(147, 22);
+            updateSpeedToolStripMenuItem.Size = new Size(298, 44);
             updateSpeedToolStripMenuItem.Text = "Update Speed";
             // 
             // pausedToolStripMenuItem
             // 
             pausedToolStripMenuItem.Name = "pausedToolStripMenuItem";
-            pausedToolStripMenuItem.Size = new Size(119, 22);
+            pausedToolStripMenuItem.Size = new Size(237, 44);
             pausedToolStripMenuItem.Text = "&Paused";
             // 
             // lowToolStripMenuItem
             // 
             lowToolStripMenuItem.Name = "lowToolStripMenuItem";
-            lowToolStripMenuItem.Size = new Size(119, 22);
+            lowToolStripMenuItem.Size = new Size(237, 44);
             lowToolStripMenuItem.Text = "&Low";
             // 
             // mediumToolStripMenuItem
             // 
             mediumToolStripMenuItem.Name = "mediumToolStripMenuItem";
-            mediumToolStripMenuItem.Size = new Size(119, 22);
+            mediumToolStripMenuItem.Size = new Size(237, 44);
             mediumToolStripMenuItem.Text = "&Medium";
             // 
             // highToolStripMenuItem
             // 
             highToolStripMenuItem.Name = "highToolStripMenuItem";
-            highToolStripMenuItem.Size = new Size(119, 22);
+            highToolStripMenuItem.Size = new Size(237, 44);
             highToolStripMenuItem.Text = "&High";
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(116, 6);
+            toolStripSeparator2.Size = new Size(234, 6);
             // 
             // refreshToolStripMenuItem
             // 
             refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            refreshToolStripMenuItem.Size = new Size(119, 22);
+            refreshToolStripMenuItem.Size = new Size(237, 44);
             refreshToolStripMenuItem.Text = "Refresh";
             // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new Size(144, 6);
+            toolStripSeparator3.Size = new Size(295, 6);
             // 
             // refreshToolStripMenuItem1
             // 
             refreshToolStripMenuItem1.Name = "refreshToolStripMenuItem1";
-            refreshToolStripMenuItem1.Size = new Size(147, 22);
+            refreshToolStripMenuItem1.Size = new Size(298, 44);
             refreshToolStripMenuItem1.Text = "Refresh";
             // 
             // helpToolStripMenuItem
             // 
             helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aboutToolStripMenuItem });
             helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            helpToolStripMenuItem.Size = new Size(44, 20);
+            helpToolStripMenuItem.Size = new Size(84, 36);
             helpToolStripMenuItem.Text = "Help";
             // 
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(116, 22);
+            aboutToolStripMenuItem.Size = new Size(227, 44);
             aboutToolStripMenuItem.Text = "About...";
             // 
             // monitorWorker
@@ -805,14 +842,15 @@ namespace NightDriver
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Gray;
-            ClientSize = new Size(1200, 670);
+            ClientSize = new Size(2229, 1429);
             Controls.Add(tabColorData);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
+            Margin = new Padding(6);
             Name = "MainForm";
             Text = "NightDriver Desktop";
             statusStrip1.ResumeLayout(false);
